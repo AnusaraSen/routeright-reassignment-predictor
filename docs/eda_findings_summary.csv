@@ -1,0 +1,15 @@
+Area,Key_Finding,Implication
+Dataset Structure,"24,918 incident-level records with 36 attributes; each incident number is unique",Suitable for incident-level EDA and later modelling
+Duplicate Records,No duplicate incident numbers and no exact duplicate rows were detected,No duplicate-removal action is required based on the current incident-level dataset
+Target Distribution,Class 0 = 54.37% and Class 1 = 45.63%; no severe class imbalance,No immediate resampling is required; reassess during modelling if necessary
+Missing Values,Missing information is mainly represented using '?' rather than standard NaN values; several attributes have extremely high missingness,Convert '?' to proper missing values and choose suitable handling methods during preprocessing
+Constant Features,active and reopen_count contain only one unique value,Review for removal because constant features provide no discriminative information
+Near-Constant Features,"made_sla, sys_mod_count, u_priority_confirmation and notify show extremely limited variation",Review predictive usefulness before retaining these features
+High Cardinality,"caller_id, u_symptom, subcategory and location contain relatively large numbers of categories",Use suitable encoding and avoid uncontrolled dimensional expansion
+Rare Categories,"Many categorical attributes contain numerous low-frequency categories, especially caller_id",Consider rare-category grouping or alternative encoding where justified
+Categorical Relationships,"Category, subcategory and location show noticeable differences in reassignment rates",These attributes may provide useful predictive information
+Priority and Urgency,Higher priority and urgency levels show higher observed reassignment rates,Priority and urgency appear potentially useful for predicting reassignment risk
+Temporal Patterns,"Opening hour, day of week, weekend status and working-hours status show differences in incident behaviour",Consider temporal feature engineering during preprocessing
+Temporal Coverage,"Incident activity is heavily concentrated in March-May 2016, with much lower monthly counts afterwards",Consider a time-aware validation strategy and interpret low-volume periods cautiously
+Numerical Outliers,Five non-zero sys_mod_count observations are flagged by the IQR method because the feature is almost entirely zero,Do not automatically remove the observations; verify whether they are valid rare cases
+Potential Leakage,Several lifecycle-related attributes may contain information unavailable at initial prediction time,Perform final prediction-time availability checks before model training

@@ -1,0 +1,12 @@
+EDA_Issue,Affected_Features,Recommended_Action
+Missing values represented by '?',Several categorical attributes,Convert '?' placeholders to proper missing values before imputation or encoding
+Extremely high missingness,"caused_by, vendor, cmdb_ci, rfc, problem_id",Review usefulness; consider exclusion where justified
+Constant features,"active, reopen_count",Consider removal because they provide no variation
+Near-constant features,"made_sla, sys_mod_count, u_priority_confirmation, notify",Review predictive usefulness before modelling
+Unique identifier / non-predictive key,number,Exclude from model predictors and retain only for incident identification and traceability
+High-cardinality categorical features,"caller_id, u_symptom, subcategory, location",Use suitable encoding; avoid uncontrolled one-hot expansion
+Rare categorical values,"category, subcategory, assignment_group, location, u_symptom, caller_id",Consider rare-category grouping where justified
+Potential data leakage,"resolved_at, resolved_by, closed_at, closed_code, made_sla and other lifecycle fields",Validate availability at prediction time and exclude future-information features
+Datetime information,opened_at,"Derive meaningful temporal features such as hour, weekday, month and weekend status"
+Uneven temporal coverage,Year-month distribution,Use a time-aware validation strategy where feasible
+Target class distribution,reassignment_required,No immediate resampling required; evaluate class weighting/resampling only if modelling results justify it
