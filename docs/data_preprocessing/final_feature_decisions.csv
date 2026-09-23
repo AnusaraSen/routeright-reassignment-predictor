@@ -1,0 +1,37 @@
+Feature,Description,Decision,Reason
+number,Incident identifier,Remove,Identifier only; not used as a predictive feature
+incident_state,Incident lifecycle state,Remove,May contain lifecycle information unavailable at ticket creation
+active,Incident active status,Remove,Constant value in the reconstructed dataset
+reopen_count,Number of reopenings,Remove,Constant value in the reconstructed dataset and lifecycle-derived
+sys_mod_count,System modification count,Remove,Near-constant and system/lifecycle-derived
+made_sla,SLA status,Remove,Near-constant and potentially outcome/lifecycle-related
+caller_id,Caller identifier,Remove,High-cardinality identifier; risk of caller-specific memorization
+opened_by,User who opened incident,Keep,Associated with incident creation and manageable cardinality
+opened_at,Incident opening timestamp,Keep,Available at creation and used to derive temporal features
+sys_created_by,System record creator,Remove,System metadata with substantial missingness
+sys_created_at,System record creation timestamp,Remove,System metadata; not required when incident opening time is available
+sys_updated_by,Last system updater,Remove,Lifecycle/system metadata
+sys_updated_at,Last system update timestamp,Remove,Lifecycle/system metadata and potentially future information
+contact_type,Incident contact method,Keep,Available as part of incident creation information
+location,Incident location,Keep,Potentially available at ticket creation
+category,Incident category,Keep,Initial incident classification
+subcategory,Incident subcategory,Keep,Initial incident classification
+u_symptom,Symptom category,Keep,Categorical symptom information available with the incident
+cmdb_ci,Configuration item,Remove,99.80% missing; only 51 non-missing observations
+impact,Incident impact,Keep,Initial incident attribute
+urgency,Incident urgency,Keep,Initial incident attribute
+priority,Incident priority,Keep,Initial incident attribute
+assignment_group,Initial assignment group,Keep,Potential initial routing information with manageable cardinality
+assigned_to,Assigned analyst,Remove,May be assigned after ticket creation and introduce temporal leakage
+knowledge,Knowledge usage indicator,Remove,May represent information generated during incident handling
+u_priority_confirmation,Priority confirmation,Remove,Extremely low variation
+notify,Notification setting,Remove,Extremely low variation
+problem_id,Related problem identifier,Remove,99.03% missing and potentially lifecycle-related
+rfc,Related change/request identifier,Remove,99.61% missing and potentially lifecycle-related
+vendor,Vendor information,Remove,99.94% missing
+caused_by,Related causing incident,Remove,99.99% missing and relationship/lifecycle-related
+closed_code,Closure code,Remove,Generated during incident closure; future information
+resolved_by,Resolver identifier,Remove,Generated during incident resolution; future information
+resolved_at,Resolution timestamp,Remove,Future information unavailable at ticket creation
+closed_at,Closure timestamp,Remove,Future information unavailable at ticket creation
+reassignment_required,Prediction target,Target,Target variable; must not be used as a model input
