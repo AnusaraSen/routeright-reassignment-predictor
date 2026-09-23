@@ -1,0 +1,8 @@
+Engineered_Feature,Source_Feature,Engineering_Method,Description,Encoding_or_Range,Role
+opened_hour,opened_at,Datetime extraction,Hour of day when the incident was opened,0–23,Model input
+opened_day_of_week,opened_at,Datetime extraction,Day of week when the incident was opened,"0=Monday, ..., 6=Sunday",Model input
+opened_month,opened_at,Datetime extraction,Calendar month in which the incident was opened,1–12,Model input
+opened_is_weekend,opened_at,Rule-based derivation,Indicates whether the incident was opened on Saturday or Sunday,"0=Weekday, 1=Weekend",Model input
+impact_encoded,impact,Ordinal encoding,Numerical representation of incident impact severity,"1=Low, 2=Medium, 3=High",Model input
+urgency_encoded,urgency,Ordinal encoding,Numerical representation of incident urgency severity,"1=Low, 2=Medium, 3=High",Model input
+priority_encoded,priority,Ordinal encoding,Numerical representation of incident priority severity,"1=Low, 2=Moderate, 3=High, 4=Critical",Model input

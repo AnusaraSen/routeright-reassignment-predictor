@@ -1,0 +1,14 @@
+Processing_Step,Affected_Features,Status,Decision,Justification
+Missing-value representation,All original features,Completed,Converted '?' placeholders to proper NaN values,Deterministic data cleaning
+Feature selection,24 unsuitable original features,Completed,"Removed identifiers, constants, near-constants, lifecycle variables, highly missing features, and leakage-prone information","Based on availability, missingness, variability, cardinality, and leakage analysis"
+Datetime parsing,opened_at,Completed,Converted opening timestamp to validated datetime representation,Required for temporal feature engineering and chronological splitting
+Temporal feature engineering,opened_at,Completed,"Created opened_hour, opened_day_of_week, opened_month, and opened_is_weekend",Deterministic transformation
+Categorical string cleaning,Retained categorical features,Completed,Removed leading/trailing whitespace and converted empty strings to missing values,No data-distribution statistics used
+Ordinal encoding,"impact, urgency, priority",Completed,Created severity-preserving numerical representations,Mappings predefined from category meanings
+Redundant feature removal,"opened_at, impact, urgency, priority",Completed,Removed original representations after validated engineered versions were created,Avoids duplicate representations in the handoff dataset
+Categorical missing-value handling,Remaining nominal categorical features,Deferred,Recommended explicit 'Missing' category,Must be applied within the post-split preprocessing pipeline
+Rare-category handling,Nominal categorical features,Deferred,Group infrequent categories where appropriate,Category-frequency rules must be learned from training data only
+Nominal categorical encoding,7 nominal categorical predictors,Deferred,Recommended one-hot encoding with unseen-category handling,Encoder must be fitted using training data only
+Numerical scaling,Temporal and ordinal numerical predictors,Deferred,Apply only for algorithms that benefit from scaling,Scaling parameters must be fitted using training data only
+Chronological split reference,opened_at_dt,Retained for handoff,Use only to create the chronological train/test split,Must not be used directly as a model predictor
+Class resampling,reassignment_required,Not required initially,"No SMOTE, oversampling, or undersampling applied",Target distribution is reasonably balanced at approximately 54% vs 46%
