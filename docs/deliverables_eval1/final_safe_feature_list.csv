@@ -1,0 +1,15 @@
+Feature,Role,Availability Justification
+opened_by,Nominal,"User who opened the incident; available at creation, manageable cardinality (208 levels)"
+contact_type,Nominal,Reporting method; available at creation
+location,Nominal,Affected location; available at creation
+category,Nominal,Initial incident classification; available at creation
+subcategory,Nominal,Initial incident classification; available at creation
+u_symptom,Nominal,User-reported symptom; available at creation
+assignment_group,Nominal,"Initial routing group; available at creation, verified not to change before this snapshot"
+opened_hour,Temporal (engineered),Deterministically derived from opened_at
+opened_day_of_week,Temporal (engineered),Deterministically derived from opened_at
+opened_month,Temporal (engineered),Deterministically derived from opened_at
+opened_is_weekend,Temporal (engineered),Deterministically derived from opened_at
+impact_encoded,Ordinal (engineered),Initial incident attribute; deterministic severity mapping
+urgency_encoded,Ordinal (engineered),Initial incident attribute; deterministic severity mapping
+priority_encoded,Ordinal (engineered),Initial incident attribute; deterministic severity mapping
