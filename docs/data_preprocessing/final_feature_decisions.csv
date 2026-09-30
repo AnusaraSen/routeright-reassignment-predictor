@@ -1,4 +1,4 @@
-Feature,Description,Decision,Reason
+ Feature,Description,Decision,Reason
 number,Incident identifier,Remove,Identifier only; not used as a predictive feature
 incident_state,Incident lifecycle state,Remove,May contain lifecycle information unavailable at ticket creation
 active,Incident active status,Remove,Constant value in the reconstructed dataset

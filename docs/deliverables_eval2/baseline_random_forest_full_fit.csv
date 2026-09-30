@@ -1,0 +1,3 @@
+model,variant,train_accuracy_full,train_f1_full
+Random Forest,unweighted,0.9896,0.9889
+Random Forest,weighted,0.9896,0.9889
