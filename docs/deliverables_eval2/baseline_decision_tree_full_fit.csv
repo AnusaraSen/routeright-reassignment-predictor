@@ -1,0 +1,3 @@
+model,variant,train_accuracy_full,train_f1_full
+Decision Tree,unweighted,0.9896,0.989
+Decision Tree,weighted,0.9896,0.989
