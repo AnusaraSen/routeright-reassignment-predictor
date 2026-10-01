@@ -5,6 +5,7 @@
 
 export interface PredictionFormData {
   caller_id?: string;
+  opened_at: string;
   opened_by: string;
   contact_type: string;
   location: string;

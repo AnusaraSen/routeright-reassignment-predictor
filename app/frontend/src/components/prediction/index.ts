@@ -1,2 +1,2 @@
-// Prediction components placeholder
-export {};
+export { PredictionForm } from './PredictionForm';
+export type { PredictionFormProps } from './PredictionForm';

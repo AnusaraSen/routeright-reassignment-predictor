@@ -72,3 +72,22 @@ export const mockTicketOptions: TicketOptions = {
     { value: 'Group 64', label: 'Identity & Access Management (Group 64)' },
   ],
 };
+
+export const subcategoryByCategoryMapping: Record<string, string[]> = {
+  'Category 26': ['Subcategory 170', 'Subcategory 174'],
+  'Category 42': ['Subcategory 125', 'Subcategory 223'],
+  'Category 34': ['Subcategory 223', 'Subcategory 125'],
+  'Category 9': ['Subcategory 62', 'Subcategory 9'],
+  'Category 53': ['Subcategory 9'],
+  'Category 20': ['Subcategory 170', 'Subcategory 62'],
+};
+
+export const getSubcategoriesForCategory = (category?: string) => {
+  if (!category || !subcategoryByCategoryMapping[category]) {
+    return mockTicketOptions.subcategory;
+  }
+  const allowed = new Set(subcategoryByCategoryMapping[category]);
+  const filtered = mockTicketOptions.subcategory.filter((sub) => allowed.has(sub.value));
+  return filtered.length > 0 ? filtered : mockTicketOptions.subcategory;
+};
+
