@@ -6,8 +6,6 @@ and artifact configurations established during model training.
 """
 
 import json
-import os
-import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
@@ -90,6 +88,9 @@ class ReassignmentPredictor:
 
     def __init__(
         self,
+        model: Optional[Any] = None,
+        pipeline: Optional[Any] = None,
+        meta: Optional[Dict[str, Any]] = None,
         pipeline_path: Optional[Union[str, Path]] = None,
         model_path: Optional[Union[str, Path]] = None,
         meta_path: Optional[Union[str, Path]] = None,
@@ -100,44 +101,28 @@ class ReassignmentPredictor:
         self.model_path = Path(model_path or (project_root / "models" / "final" / "final_model.pkl"))
         self.meta_path = Path(meta_path or (project_root / "models" / "final" / "final_model_meta.json"))
 
-        self.pipeline: Any = None
-        self.model: Any = None
-        self.meta: Dict[str, Any] = {}
+        self.pipeline: Any = pipeline
+        self.model: Any = model
+        self.meta: Dict[str, Any] = meta or {}
         self.threshold: float = 0.5
         self.class_1_idx: int = 1
         self.is_loaded: bool = False
 
-        if auto_load:
+        if model is not None and pipeline is not None and meta is not None:
+            self._validate_and_set_artifacts(model, pipeline, meta)
+        elif auto_load:
             self.load_artifacts()
 
-    def load_artifacts(self) -> None:
-        """Load and validate the preprocessing pipeline, final model, and metadata JSON."""
-        # 1. Load metadata JSON
-        if not self.meta_path.exists():
-            raise FileNotFoundError(f"Model metadata file not found at: {self.meta_path}")
-        try:
-            with open(self.meta_path, "r", encoding="utf-8") as f:
-                self.meta = json.load(f)
-        except Exception as e:
-            raise RuntimeError(f"Failed to read model metadata JSON: {e}") from e
+    def _validate_and_set_artifacts(self, model: Any, pipeline: Any, meta: Dict[str, Any]) -> None:
+        """Validate pre-loaded artifacts and assign internal references."""
+        self.model = model
+        self.pipeline = pipeline
+        self.meta = meta
 
-        # Extract threshold and expected columns from metadata
         self.threshold = float(self.meta.get("decision_threshold", 0.5))
         expected_meta_columns = self.meta.get("feature_columns", [])
         expected_n_features = int(self.meta.get("n_features", EXPECTED_FEATURE_COUNT))
 
-        # 2. Load preprocessing pipeline
-        if not self.pipeline_path.exists():
-            raise FileNotFoundError(f"Preprocessing pipeline file not found at: {self.pipeline_path}")
-        try:
-            self.pipeline = joblib.load(self.pipeline_path)
-        except Exception as e:
-            raise RuntimeError(
-                f"Failed to load preprocessing pipeline from {self.pipeline_path}. "
-                f"Ensure custom transformers are registered: {e}"
-            ) from e
-
-        # Validate pipeline feature names and count
         if not hasattr(self.pipeline, "get_feature_names_out"):
             raise RuntimeError("Loaded pipeline does not implement get_feature_names_out().")
 
@@ -153,31 +138,72 @@ class ReassignmentPredictor:
                 "Feature column names/order from preprocessing pipeline do not match metadata JSON feature_columns."
             )
 
-        # 3. Load final model
-        if not self.model_path.exists():
-            raise FileNotFoundError(f"Final model file not found at: {self.model_path}")
-        try:
-            self.model = joblib.load(self.model_path)
-        except Exception as e:
-            raise RuntimeError(f"Failed to load final model from {self.model_path}: {e}") from e
-
-        # Validate model input features
         model_n_features = getattr(self.model, "n_features_in_", None)
         if model_n_features is not None and model_n_features != expected_n_features:
             raise ValueError(
                 f"Model expects {model_n_features} input features, but pipeline produces {expected_n_features}."
             )
 
-        # Validate model classes
         model_classes = getattr(self.model, "classes_", None)
         if model_classes is None or 1 not in model_classes:
             raise ValueError(f"Model classes_ does not contain positive class 1: {model_classes}")
 
-        # Find the safe index for positive class (1)
         classes_list = list(model_classes)
         self.class_1_idx = classes_list.index(1)
-
         self.is_loaded = True
+
+    def load_artifacts(self) -> None:
+        """Load and validate the preprocessing pipeline, final model, and metadata JSON."""
+        from app.backend.model_loader import artifact_loader
+
+        project_root = _find_project_root()
+        is_default_paths = (
+            self.pipeline_path == (project_root / "models" / "preprocessing_pipeline.pkl")
+            and self.model_path == (project_root / "models" / "final" / "final_model.pkl")
+            and self.meta_path == (project_root / "models" / "final" / "final_model_meta.json")
+        )
+
+        if is_default_paths and artifact_loader._is_loaded:
+            self._validate_and_set_artifacts(
+                artifact_loader.model,
+                artifact_loader.pipeline,
+                artifact_loader.metadata
+            )
+            return
+
+        if is_default_paths:
+            model, pipeline, metadata = artifact_loader.load_artifacts()
+            self._validate_and_set_artifacts(model, pipeline, metadata)
+            return
+
+        # 1. Load metadata JSON
+        if not self.meta_path.exists():
+            raise FileNotFoundError(f"Model metadata file not found at: {self.meta_path}")
+        try:
+            with open(self.meta_path, "r", encoding="utf-8") as f:
+                meta = json.load(f)
+        except Exception as e:
+            raise RuntimeError(f"Failed to read model metadata JSON: {e}") from e
+
+        # 2. Load preprocessing pipeline
+        if not self.pipeline_path.exists():
+            raise FileNotFoundError(f"Preprocessing pipeline file not found at: {self.pipeline_path}")
+        try:
+            pipeline = joblib.load(self.pipeline_path)
+        except Exception as e:
+            raise RuntimeError(
+                f"Failed to load preprocessing pipeline from {self.pipeline_path}: {e}"
+            ) from e
+
+        # 3. Load final model
+        if not self.model_path.exists():
+            raise FileNotFoundError(f"Final model file not found at: {self.model_path}")
+        try:
+            model = joblib.load(self.model_path)
+        except Exception as e:
+            raise RuntimeError(f"Failed to load final model from {self.model_path}: {e}") from e
+
+        self._validate_and_set_artifacts(model, pipeline, meta)
 
     def _parse_opened_at(self, val: Any) -> pd.Timestamp:
         """Parse raw opened_at input into a valid pandas Timestamp.
@@ -350,5 +376,14 @@ def get_predictor() -> ReassignmentPredictor:
     """Get or create the singleton ReassignmentPredictor instance."""
     global _DEFAULT_PREDICTOR
     if _DEFAULT_PREDICTOR is None:
-        _DEFAULT_PREDICTOR = ReassignmentPredictor()
+        from app.backend.model_loader import artifact_loader
+        if artifact_loader._is_loaded:
+            _DEFAULT_PREDICTOR = ReassignmentPredictor(
+                model=artifact_loader.model,
+                pipeline=artifact_loader.pipeline,
+                meta=artifact_loader.metadata,
+                auto_load=False,
+            )
+        else:
+            _DEFAULT_PREDICTOR = ReassignmentPredictor(auto_load=True)
     return _DEFAULT_PREDICTOR

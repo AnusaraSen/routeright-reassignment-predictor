@@ -11,56 +11,18 @@ Handles custom sklearn transformers and missing file exceptions gracefully.
 
 import json
 import logging
-import sys
 from typing import Dict, Any, Tuple
 import joblib
-from sklearn.base import BaseEstimator, TransformerMixin
 
 from app.backend.config import MODEL_PATH, METADATA_PATH, PREPROCESSING_PIPELINE_PATH
+from app.backend.transformers import register_custom_transformers
 
 # Configure basic logger
 logger = logging.getLogger("routeright.model_loader")
 logging.basicConfig(level=logging.INFO)
 
-
-# --- Custom Sklearn Transformers definition ---
-# Required for joblib/pickle unpickling of preprocessing_pipeline.pkl
-class CategoryLabelCleaner(BaseEstimator, TransformerMixin):
-    """Strips column-name-restating prefixes from raw category labels."""
-    def __init__(self, prefix_map=None):
-        self.prefix_map = prefix_map or {}
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X):
-        return X
-
-    def get_feature_names_out(self, input_features=None):
-        import numpy as np
-        return np.asarray(input_features)
-
-
-class RareCategoryGrouper(BaseEstimator, TransformerMixin):
-    """Groups low-frequency categories into 'Other'."""
-    def __init__(self, threshold=0.01, other_label="Other"):
-        self.threshold = threshold
-        self.other_label = other_label
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X):
-        return X
-
-    def get_feature_names_out(self, input_features=None):
-        import numpy as np
-        return np.asarray(input_features)
-
-
-# Register classes in __main__ module to guarantee unpickling compatibility
-sys.modules['__main__'].CategoryLabelCleaner = CategoryLabelCleaner
-sys.modules['__main__'].RareCategoryGrouper = RareCategoryGrouper
+# Ensure canonical custom transformers are registered in __main__ for unpickling
+register_custom_transformers()
 
 
 class ArtifactLoader:
