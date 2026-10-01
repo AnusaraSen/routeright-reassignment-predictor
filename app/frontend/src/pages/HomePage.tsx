@@ -147,7 +147,7 @@ export const HomePage: React.FC = () => {
                 <div className="p-3 rounded-xl bg-slate-800/85 border border-slate-700/70 space-y-0.5">
                   <div className="flex items-center gap-1.5 text-slate-400 text-[11px]">
                     <Users className="w-3.5 h-3.5 text-indigo-400" />
-                    <span>Initial Assignment</span>
+                    <span>Initial Target Queue</span>
                   </div>
                   <div className="font-bold text-white text-xs sm:text-sm">
                     General Service Desk L1
@@ -382,7 +382,7 @@ export const HomePage: React.FC = () => {
 
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
                 Delivers probabilistic risk guidance to triage officers while keeping full human
-                control over final assignment.
+                control over final routing decisions.
               </p>
 
               {/* Clear Micro-Stat */}
@@ -520,7 +520,7 @@ export const HomePage: React.FC = () => {
                     Ticket opened with initial 11 parameters
                   </div>
                   <div className="text-xs text-slate-500 mt-0.5">
-                    Pre-assignment parameters evaluated in &lt; 50ms inference.
+                    Creation attributes evaluated in &lt; 50ms inference.
                   </div>
                 </div>
 
@@ -541,7 +541,7 @@ export const HomePage: React.FC = () => {
                     3
                   </span>
                   <div className="text-xs font-bold text-slate-800">
-                    Triage officer assigns directly to Cloud Security on first touch
+                    Triage officer routes directly to Cloud Security on first touch
                   </div>
                   <div className="text-xs text-slate-500 mt-0.5">
                     Human-in-the-loop decision routing directly to right team.

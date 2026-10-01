@@ -17,7 +17,7 @@ export const AboutPage: React.FC = () => {
       step: '01',
       title: 'Enter ticket details',
       description:
-        'The service-desk agent or triage officer inputs human-readable incident parameters available when the ticket is initially opened (caller, contact method, location, category, symptom, and assignment group).',
+        'The service-desk agent or triage officer inputs human-readable incident parameters available when the ticket is initially opened (caller, contact method, location, category, symptom, and target resolver queue).',
       icon: FileEdit,
       color: 'bg-blue-50 text-blue-600 border-blue-200',
     },
@@ -77,8 +77,8 @@ export const AboutPage: React.FC = () => {
               This tool supports human decisions and does not automatically reassign tickets.
             </strong>{' '}
             All outputs represent statistical estimates aimed at helping service-desk professionals
-            spot problematic tickets early. Final assignment and routing remain under the governance
-            of operational staff.
+            spot problematic tickets early. Final dispatch and routing decisions remain under the
+            governance of operational staff.
           </p>
         </div>
       </div>
@@ -121,21 +121,21 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Module and Project Context */}
+      {/* System Architecture & Operational Governance */}
       <section aria-labelledby="context-heading" className="space-y-4">
         <h2 id="context-heading" className="text-xl font-bold text-slate-900">
-          Module & Project Context
+          System Architecture & Operational Governance
         </h2>
 
         <Card variant="muted">
           <CardContent className="space-y-4 p-6 text-sm text-slate-600 leading-relaxed">
             <div className="flex items-center gap-2 text-slate-900 font-semibold">
               <Layers className="w-4 h-4 text-blue-600" />
-              <span>IT3051 Fundamentals of Data Mining Work Package</span>
+              <span>Incident Triage Intelligence Architecture</span>
             </div>
             <p>
-              This application forms the frontend evaluation layer for an end-to-end IT incident
-              mining pipeline. Key design constraints respected by the interface include:
+              This application forms the frontend evaluation layer for an enterprise IT incident
+              routing pipeline. Key design constraints respected by the interface include:
             </p>
             <ul className="space-y-2 pl-2">
               <li className="flex items-start gap-2">

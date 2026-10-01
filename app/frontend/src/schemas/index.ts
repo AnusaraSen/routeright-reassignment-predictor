@@ -1,2 +1,1 @@
-// Schemas placeholder
-export {};
+export * from './prediction.schema';
