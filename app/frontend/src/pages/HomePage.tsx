@@ -91,19 +91,19 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Balanced Live Triage Preview Card */}
+      {/* High-Contrast Live Triage Preview Card (Dark Console Style to distinctly pop against light background) */}
       <section aria-label="Incident Triage Preview" className="max-w-4xl mx-auto">
-        <div className="relative rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-7 shadow-xl shadow-slate-200/50 transition-all">
+        <div className="relative rounded-3xl border border-slate-700/80 bg-slate-900 p-5 sm:p-7 shadow-2xl shadow-slate-900/40 text-white transition-all">
           {/* Top Window Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100">
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-800">
             <div className="flex items-center space-x-2.5">
               <div className="flex space-x-1.5">
-                <div className="w-3 h-3 rounded-full bg-rose-400"></div>
+                <div className="w-3 h-3 rounded-full bg-rose-500"></div>
                 <div className="w-3 h-3 rounded-full bg-amber-400"></div>
                 <div className="w-3 h-3 rounded-full bg-emerald-400"></div>
               </div>
-              <div className="h-3.5 w-px bg-slate-200 ml-1"></div>
-              <span className="text-xs sm:text-sm font-mono font-bold text-slate-700">
+              <div className="h-3.5 w-px bg-slate-700 ml-1"></div>
+              <span className="text-xs sm:text-sm font-mono font-bold text-white tracking-wide">
                 INC-2026-08492
               </span>
               <span className="text-xs text-slate-400 hidden sm:inline">
@@ -112,18 +112,18 @@ export const HomePage: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
-                <Flame className="w-3 h-3 text-amber-600" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                <Flame className="w-3.5 h-3.5 text-amber-400" />
                 Priority: 2 - High
               </span>
-              <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 shadow-xs">
-                <AlertTriangle className="w-3 h-3 text-rose-600" />
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 shadow-xs">
+                <AlertTriangle className="w-3.5 h-3.5 text-rose-400" />
                 Reassignment Likely (High Risk)
               </span>
             </div>
           </div>
 
-          {/* Card Body - Balanced Grid */}
+          {/* Card Body - High-Contrast Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-5">
             {/* Left Column: 6 Captured Creation Attributes */}
             <div className="lg:col-span-7 space-y-3">
@@ -131,82 +131,80 @@ export const HomePage: React.FC = () => {
                 <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
                   Initial Ticket Parameters (Captured at Creation)
                 </div>
-                <span className="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">
+                <span className="text-[11px] font-semibold text-blue-300 bg-blue-500/20 px-2.5 py-0.5 rounded-full border border-blue-500/30">
                   Pre-Triage Attributes
                 </span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {/* Tile 1 */}
-                <div className="p-3 rounded-lg bg-slate-50 border border-slate-100 space-y-0.5">
-                  <div className="flex items-center gap-1.5 text-slate-500 text-[11px]">
-                    <Tag className="w-3 h-3 text-blue-600" />
+                <div className="p-3 rounded-xl bg-slate-800/85 border border-slate-700/70 space-y-0.5">
+                  <div className="flex items-center gap-1.5 text-slate-400 text-[11px]">
+                    <Tag className="w-3.5 h-3.5 text-blue-400" />
                     <span>Incident Category</span>
                   </div>
-                  <div className="font-bold text-slate-800 text-xs sm:text-sm">
+                  <div className="font-bold text-white text-xs sm:text-sm">
                     Network / VPN Gateway
                   </div>
                 </div>
 
                 {/* Tile 2 */}
-                <div className="p-3 rounded-lg bg-slate-50 border border-slate-100 space-y-0.5">
-                  <div className="flex items-center gap-1.5 text-slate-500 text-[11px]">
-                    <Users className="w-3 h-3 text-indigo-600" />
+                <div className="p-3 rounded-xl bg-slate-800/85 border border-slate-700/70 space-y-0.5">
+                  <div className="flex items-center gap-1.5 text-slate-400 text-[11px]">
+                    <Users className="w-3.5 h-3.5 text-indigo-400" />
                     <span>Initial Assignment</span>
                   </div>
-                  <div className="font-bold text-slate-800 text-xs sm:text-sm">
+                  <div className="font-bold text-white text-xs sm:text-sm">
                     General Service Desk L1
                   </div>
                 </div>
 
                 {/* Tile 3 */}
-                <div className="p-3 rounded-lg bg-slate-50 border border-slate-100 space-y-0.5">
-                  <div className="flex items-center gap-1.5 text-slate-500 text-[11px]">
-                    <AlertTriangle className="w-3 h-3 text-amber-600" />
+                <div className="p-3 rounded-xl bg-slate-800/85 border border-slate-700/70 space-y-0.5">
+                  <div className="flex items-center gap-1.5 text-slate-400 text-[11px]">
+                    <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
                     <span>Reported Symptom</span>
                   </div>
-                  <div className="font-bold text-slate-800 text-xs sm:text-sm">
-                    Global Auth Timeout
-                  </div>
+                  <div className="font-bold text-white text-xs sm:text-sm">Global Auth Timeout</div>
                 </div>
 
                 {/* Tile 4 */}
-                <div className="p-3 rounded-lg bg-slate-50 border border-slate-100 space-y-0.5">
-                  <div className="flex items-center gap-1.5 text-slate-500 text-[11px]">
-                    <MapPin className="w-3 h-3 text-emerald-600" />
+                <div className="p-3 rounded-xl bg-slate-800/85 border border-slate-700/70 space-y-0.5">
+                  <div className="flex items-center gap-1.5 text-slate-400 text-[11px]">
+                    <MapPin className="w-3.5 h-3.5 text-emerald-400" />
                     <span>Channel & Location</span>
                   </div>
-                  <div className="font-bold text-slate-800 text-xs sm:text-sm">
+                  <div className="font-bold text-white text-xs sm:text-sm">
                     Phone &bull; Office 143
                   </div>
                 </div>
 
                 {/* Tile 5 */}
-                <div className="p-3 rounded-lg bg-slate-50 border border-slate-100 space-y-0.5">
-                  <div className="flex items-center gap-1.5 text-slate-500 text-[11px]">
-                    <UserCheck className="w-3 h-3 text-purple-600" />
+                <div className="p-3 rounded-xl bg-slate-800/85 border border-slate-700/70 space-y-0.5">
+                  <div className="flex items-center gap-1.5 text-slate-400 text-[11px]">
+                    <UserCheck className="w-3.5 h-3.5 text-purple-400" />
                     <span>Opened By</span>
                   </div>
-                  <div className="font-bold text-slate-800 text-xs sm:text-sm">
+                  <div className="font-bold text-white text-xs sm:text-sm">
                     Opened by 17 (Staff)
                   </div>
                 </div>
 
                 {/* Tile 6 */}
-                <div className="p-3 rounded-lg bg-slate-50 border border-slate-100 space-y-0.5">
-                  <div className="flex items-center gap-1.5 text-slate-500 text-[11px]">
-                    <Network className="w-3 h-3 text-blue-500" />
+                <div className="p-3 rounded-xl bg-slate-800/85 border border-slate-700/70 space-y-0.5">
+                  <div className="flex items-center gap-1.5 text-slate-400 text-[11px]">
+                    <Network className="w-3.5 h-3.5 text-blue-400" />
                     <span>Subcategory</span>
                   </div>
-                  <div className="font-bold text-slate-800 text-xs sm:text-sm">Subcategory 170</div>
+                  <div className="font-bold text-white text-xs sm:text-sm">Subcategory 170</div>
                 </div>
               </div>
             </div>
 
             {/* Right Column: AI Model Risk Verdict */}
-            <div className="lg:col-span-5 flex flex-col justify-between p-5 sm:p-6 rounded-xl bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-white shadow-md space-y-4">
+            <div className="lg:col-span-5 flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-slate-950 border border-indigo-500/30 text-white shadow-inner space-y-4">
               <div>
-                <div className="flex items-center justify-between pb-2.5 border-b border-slate-700/80">
+                <div className="flex items-center justify-between pb-2.5 border-b border-slate-800">
                   <span className="text-[11px] uppercase tracking-wider font-semibold text-slate-400">
                     Decision Support Engine
                   </span>
@@ -224,8 +222,8 @@ export const HomePage: React.FC = () => {
                     <span className="text-2xl sm:text-3xl font-black text-rose-400">78%</span>
                   </div>
                   {/* Progress Bar */}
-                  <div className="w-full bg-slate-700/80 rounded-full h-2 overflow-hidden">
-                    <div className="bg-gradient-to-r from-amber-500 to-rose-500 h-2 rounded-full w-[78%]"></div>
+                  <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                    <div className="bg-gradient-to-r from-amber-400 to-rose-500 h-2 rounded-full w-[78%]"></div>
                   </div>
                 </div>
 
@@ -238,7 +236,7 @@ export const HomePage: React.FC = () => {
               </div>
 
               {/* Actionable Recommendation */}
-              <div className="p-3.5 rounded-lg bg-white/10 backdrop-blur-xs border border-white/10 space-y-1">
+              <div className="p-3.5 rounded-xl bg-blue-950/60 border border-blue-500/30 space-y-1">
                 <div className="text-[10px] font-bold uppercase tracking-wider text-blue-300 flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
                   <span>Routing Recommendation</span>
