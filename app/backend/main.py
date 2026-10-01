@@ -11,8 +11,13 @@ import logging
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.backend.schemas import HealthCheckResponse
+from app.backend.schemas import (
+    HealthCheckResponse,
+    IncidentPredictionRequest,
+    IncidentPredictionResponse,
+)
 from app.backend.model_loader import artifact_loader
+from app.backend.services.predictor import get_predictor
 
 # Configure logger
 logger = logging.getLogger("routeright.backend")
@@ -27,6 +32,8 @@ async def lifespan(app: FastAPI):
     logger.info("Initializing RouteRight AI backend service...")
     try:
         artifact_loader.load_artifacts()
+        # Initialize predictor singleton with loaded artifacts
+        get_predictor()
         logger.info("All model artifacts loaded successfully during startup.")
     except Exception as err:
         logger.warning(
@@ -84,11 +91,12 @@ async def health_check():
     """
     artifact_status = artifact_loader.check_artifacts_status()
 
-    # Determine overall service status
+    # Determine overall service status: healthy only if all artifact files exist AND are loaded
     is_healthy = (
         artifact_status["model_file_exists"]
         and artifact_status["pipeline_file_exists"]
         and artifact_status["metadata_file_exists"]
+        and artifact_status["is_loaded"]
     )
 
     return HealthCheckResponse(
@@ -97,3 +105,49 @@ async def health_check():
         artifacts_loaded=artifact_status["is_loaded"],
         details=artifact_status
     )
+
+
+@app.post(
+    "/predict",
+    response_model=IncidentPredictionResponse,
+    status_code=status.HTTP_200_OK,
+    tags=["Prediction"],
+    summary="Predict Incident Ticket Reassignment Risk"
+)
+async def predict_incident(payload: IncidentPredictionRequest):
+    """
+    Predicts whether an IT support incident ticket is likely to require reassignment later
+    in its lifecycle, based on attributes available at ticket creation time.
+    """
+    try:
+        predictor = get_predictor()
+        raw_dict = payload.model_dump()
+        result = predictor.predict(raw_dict)
+
+        return IncidentPredictionResponse(
+            reassignment_required=result["prediction"],
+            reassignment_probability=result["probability"],
+            risk_label=result["risk_label"],
+            decision_threshold=result["threshold"],
+            model_name=predictor.meta.get("model", "Random Forest"),
+            status="success"
+        )
+    except ValueError as val_err:
+        logger.warning(f"Validation error during prediction: {val_err}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid request data: {str(val_err)}"
+        ) from val_err
+    except RuntimeError as run_err:
+        logger.error(f"Internal runtime error during prediction: {run_err}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An internal error occurred while processing the prediction."
+        ) from run_err
+    except Exception as err:
+        logger.error(f"Unexpected error during prediction: {err}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An internal error occurred while processing the prediction."
+        ) from err
+
