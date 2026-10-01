@@ -1,0 +1,2 @@
+// Prediction components placeholder
+export {};
