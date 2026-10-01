@@ -1,2 +1,2 @@
-// Hooks placeholder
-export {};
+export { usePrediction } from './usePrediction';
+export type { UsePredictionReturn, PredictionStatus } from './usePrediction';

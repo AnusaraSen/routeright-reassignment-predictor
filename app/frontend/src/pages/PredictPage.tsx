@@ -1,32 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Activity,
-  AlertTriangle,
   CheckCircle2,
   HelpCircle,
   ShieldCheck,
 } from 'lucide-react';
+import { ErrorBanner } from '@/components/common/ErrorBanner';
 import { PredictionForm } from '@/components/prediction/PredictionForm';
-import { mockPredict } from '@/mocks/prediction';
+import { PredictionResult } from '@/components/prediction/PredictionResult';
+import { PredictionSkeleton } from '@/components/prediction/PredictionSkeleton';
+import { usePrediction } from '@/hooks/usePrediction';
 import { PredictionFormSchemaType } from '@/schemas/prediction.schema';
-import { PredictionResponse } from '@/types/prediction';
 
 export const PredictPage: React.FC = () => {
-  const [predictionResult, setPredictionResult] = useState<PredictionResponse | null>(null);
-  const [isEvaluating, setIsEvaluating] = useState(false);
+  const { status, result, error, isLoading, predict, reset, retry } = usePrediction();
 
-  const handleResetForm = () => {
-    setPredictionResult(null);
+  const handleFormSubmit = async (data: PredictionFormSchemaType) => {
+    await predict(data);
   };
 
-  const onSubmit = async (data: PredictionFormSchemaType) => {
-    setIsEvaluating(true);
-    try {
-      const result = await mockPredict(data);
-      setPredictionResult(result);
-    } finally {
-      setIsEvaluating(false);
-    }
+  const handleResetForm = () => {
+    reset();
   };
 
   return (
@@ -72,6 +66,15 @@ export const PredictPage: React.FC = () => {
         </div>
       </div>
 
+      {/* Error Alert Banner if Prediction Request Failed */}
+      {error && (
+        <ErrorBanner
+          message={error}
+          onRetry={retry}
+          onDismiss={reset}
+        />
+      )}
+
       {/* Two-Column Layout for Form and Prediction Result Shells */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Modular Prediction Form */}
@@ -80,8 +83,8 @@ export const PredictPage: React.FC = () => {
           className="lg:col-span-7 xl:col-span-8 space-y-6"
         >
           <PredictionForm
-            onSubmit={onSubmit}
-            isEvaluating={isEvaluating}
+            onSubmit={handleFormSubmit}
+            isEvaluating={isLoading}
             onReset={handleResetForm}
           />
         </section>
@@ -91,110 +94,36 @@ export const PredictPage: React.FC = () => {
           aria-labelledby="prediction-result-heading"
           className="lg:col-span-5 xl:col-span-4 space-y-6"
         >
-          {/* Telemetry Result Console Card */}
-          <div className="rounded-3xl bg-slate-900 border border-slate-800 p-6 sm:p-7 shadow-xl text-white space-y-6">
-            {/* Top Header */}
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800">
-              <div className="flex items-center space-x-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-rose-500"></div>
-                <div className="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
-                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
-                <span
-                  id="prediction-result-heading"
-                  className="text-sm font-bold text-white ml-2 tracking-wide"
-                >
-                  Assessment Result
+          {/* Dynamic State: Loading Skeleton vs Result vs Awaiting Submission */}
+          {isLoading ? (
+            <PredictionSkeleton />
+          ) : status === 'success' && result ? (
+            <PredictionResult
+              result={result}
+              onStartNew={handleResetForm}
+            />
+          ) : (
+            <div className="rounded-3xl bg-slate-900 border border-slate-800 p-6 sm:p-7 shadow-xl text-white space-y-6">
+              {/* Top Header */}
+              <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-rose-500"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+                  <span
+                    id="prediction-result-heading"
+                    className="text-sm font-bold text-white ml-2 tracking-wide"
+                  >
+                    Assessment Result
+                  </span>
+                </div>
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold text-slate-400 bg-slate-800/80 px-2.5 py-0.5 rounded-full border border-slate-700/50">
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                  Ready for Input
                 </span>
               </div>
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                &lt; 50ms Inference
-              </span>
-            </div>
 
-            {/* Dynamic State: Result vs Awaiting */}
-            {predictionResult ? (
-              <div className="space-y-5 animate-in fade-in duration-300">
-                {/* Result Status Badge */}
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
-                    Model Verdict
-                  </span>
-                  <span
-                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${
-                      predictionResult.prediction === 1
-                        ? 'bg-rose-500/20 text-rose-300 border-rose-500/40'
-                        : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-                    }`}
-                  >
-                    {predictionResult.prediction === 1 ? (
-                      <AlertTriangle className="w-3.5 h-3.5 text-rose-400" />
-                    ) : (
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                    )}
-                    {predictionResult.label}
-                  </span>
-                </div>
-
-                {/* Probability Gauge Bar */}
-                <div className="space-y-2">
-                  <div className="flex items-baseline justify-between">
-                    <span className="text-xs text-slate-300 font-medium">
-                      Reassignment Probability
-                    </span>
-                    <span
-                      className={`text-3xl font-black ${
-                        predictionResult.prediction === 1 ? 'text-rose-400' : 'text-emerald-400'
-                      }`}
-                    >
-                      {Math.round(predictionResult.probability * 100)}%
-                    </span>
-                  </div>
-                  <div className="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden">
-                    <div
-                      className={`h-2.5 rounded-full transition-all duration-700 ${
-                        predictionResult.prediction === 1
-                          ? 'bg-gradient-to-r from-amber-400 to-rose-500'
-                          : 'bg-gradient-to-r from-teal-400 to-emerald-500'
-                      }`}
-                      style={{ width: `${Math.round(predictionResult.probability * 100)}%` }}
-                    />
-                  </div>
-                </div>
-
-                {/* Pattern Diagnosis */}
-                <div className="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                    Pattern Diagnosis
-                  </span>
-                  <p className="text-xs text-slate-200 leading-relaxed font-normal">
-                    {predictionResult.diagnosis}
-                  </p>
-                </div>
-
-                {/* Recommendation Box */}
-                {predictionResult.recommendation && (
-                  <div
-                    className={`p-3.5 rounded-2xl border space-y-1 ${
-                      predictionResult.prediction === 1
-                        ? 'bg-blue-950/60 border-blue-500/30'
-                        : 'bg-emerald-950/60 border-emerald-500/30'
-                    }`}
-                  >
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-blue-300 flex items-center gap-1.5">
-                      <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
-                      <span>Advisory Recommendation</span>
-                    </div>
-                    <div className="text-xs font-bold text-white">
-                      {predictionResult.recommendation}
-                    </div>
-                    <div className="text-[11px] text-slate-300">
-                      {predictionResult.estimated_savings}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
+              {/* Awaiting Submission Graphic & Guidance */}
               <div className="py-6 flex flex-col items-center justify-center text-center space-y-4">
                 <div className="relative">
                   <div className="w-16 h-16 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 shadow-inner">
@@ -227,8 +156,8 @@ export const PredictPage: React.FC = () => {
                   </div>
                 </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Feature Expectations & Guardrails */}
           <div className="rounded-2xl bg-white border border-slate-200/90 p-5 shadow-xs space-y-3">
