@@ -1,2 +1,5 @@
-// Common components placeholder
-export {};
+export { Button } from './Button';
+export type { ButtonProps } from './Button';
+
+export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './Card';
+export type { CardProps } from './Card';

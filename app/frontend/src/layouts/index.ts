@@ -1,2 +1,1 @@
-// Layouts placeholder
-export {};
+export { AppLayout } from './AppLayout';
