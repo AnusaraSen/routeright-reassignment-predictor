@@ -1,0 +1,14 @@
+{
+  "model": "Random Forest",
+  "hyperparameters": {
+    "n_estimators": 500,
+    "min_samples_leaf": 2,
+    "max_features": "sqrt",
+    "max_depth": null,
+    "class_weight": "balanced"
+  },
+  "dropped_features": [],
+  "first_run": "2026-10-01T14:47:49",
+  "last_run": "2026-10-01T14:47:49",
+  "n_runs": 1
+}

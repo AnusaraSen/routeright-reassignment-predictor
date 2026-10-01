@@ -1,0 +1,6 @@
+review_top_share,tickets_reviewed,reassigned_among_reviewed,precision,share_of_all_reassignments_caught,lift_vs_random
+10%,374,344,0.92,0.248,2.477
+20%,748,591,0.79,0.426,2.128
+30%,1121,805,0.718,0.58,1.934
+40%,1495,979,0.655,0.705,1.764
+50%,1869,1109,0.593,0.799,1.598

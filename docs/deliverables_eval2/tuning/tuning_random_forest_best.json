@@ -1,0 +1,28 @@
+{
+  "model": "Random Forest",
+  "best_params": {
+    "n_estimators": 500,
+    "min_samples_leaf": 2,
+    "max_features": "sqrt",
+    "max_depth": null,
+    "class_weight": "balanced"
+  },
+  "search_n_iter": 40,
+  "scoring": "pr_auc",
+  "cv": "TimeSeriesSplit(5)",
+  "variant": "tuned",
+  "pr_auc": 0.7611,
+  "pr_auc_std": 0.0472,
+  "f1": 0.6802,
+  "f1_std": 0.0573,
+  "recall": 0.6731,
+  "recall_std": 0.0834,
+  "precision": 0.6925,
+  "precision_std": 0.0525,
+  "accuracy": 0.7216,
+  "accuracy_std": 0.024,
+  "roc_auc": 0.7881,
+  "roc_auc_std": 0.023,
+  "train_accuracy": 0.8881,
+  "train_pr_auc": 0.9612
+}

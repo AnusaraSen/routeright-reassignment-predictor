@@ -1,0 +1,4 @@
+model,variant,pr_auc,pr_auc_std,f1,f1_std,recall,recall_std,precision,precision_std,accuracy,accuracy_std,roc_auc,roc_auc_std,train_accuracy,pr_auc_vs_best_baseline,f1_vs_best_baseline
+Gradient Boosting,weighted,0.7308,0.07,0.6156,0.09,0.5723,0.1207,0.6766,0.0794,0.6893,0.0299,0.7558,0.036,0.7498,0.0,0.0
+Gradient Boosting,unweighted,0.7268,0.0721,0.6351,0.1057,0.6455,0.176,0.653,0.104,0.6837,0.0555,0.7527,0.0359,0.7525,-0.004,0.0195
+Gradient Boosting,tuned,0.7537,0.046,0.6739,0.0641,0.6533,0.1053,0.7079,0.0589,0.7233,0.0323,0.7849,0.0274,0.8319,0.0229,0.0583

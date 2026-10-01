@@ -1,0 +1,105 @@
+{
+  "model": "Random Forest",
+  "hyperparameters": {
+    "n_estimators": 500,
+    "min_samples_leaf": 2,
+    "max_features": "sqrt",
+    "max_depth": null,
+    "class_weight": "balanced"
+  },
+  "dropped_features": [],
+  "n_features": 109,
+  "decision_threshold": 0.5,
+  "n_test": 3738,
+  "test_positive_rate": 0.3713215623327983,
+  "train_positive_rate": 0.47124645892351275,
+  "may_share_of_test": 0.9266987693953986,
+  "test_metrics": {
+    "threshold": 0.5,
+    "accuracy": 0.7506688068485822,
+    "balanced_accuracy": 0.7425688270280213,
+    "precision": 0.650197628458498,
+    "recall": 0.7110951008645533,
+    "specificity": 0.7740425531914894,
+    "f1": 0.6792842395044735,
+    "mcc": 0.4772888347199738,
+    "roc_auc": 0.822589061254522,
+    "pr_auc": 0.7559121814531724,
+    "brier": 0.1687823659756809,
+    "tn": 1819,
+    "fp": 531,
+    "fn": 401,
+    "tp": 987
+  },
+  "bootstrap_95ci": {
+    "pr_auc": {
+      "estimate": 0.7559,
+      "ci_low": 0.735,
+      "ci_high": 0.7757
+    },
+    "roc_auc": {
+      "estimate": 0.8226,
+      "ci_low": 0.8088,
+      "ci_high": 0.8352
+    },
+    "f1": {
+      "estimate": 0.6793,
+      "ci_low": 0.6585,
+      "ci_high": 0.6979
+    },
+    "recall": {
+      "estimate": 0.7111,
+      "ci_low": 0.6882,
+      "ci_high": 0.7346
+    },
+    "precision": {
+      "estimate": 0.6502,
+      "ci_low": 0.627,
+      "ci_high": 0.6727
+    },
+    "accuracy": {
+      "estimate": 0.7507,
+      "ci_low": 0.7373,
+      "ci_high": 0.764
+    }
+  },
+  "cv_estimate": {
+    "pr_auc": 0.7611,
+    "pr_auc_std": 0.0527,
+    "f1": 0.6802,
+    "accuracy": 0.7216
+  },
+  "sensitivity_no_opened_month": {
+    "pr_auc": {
+      "primary (all features)": 0.7559,
+      "sensitivity (no opened_month)": 0.7352,
+      "difference (primary - sensitivity)": 0.0207
+    },
+    "roc_auc": {
+      "primary (all features)": 0.8226,
+      "sensitivity (no opened_month)": 0.8088,
+      "difference (primary - sensitivity)": 0.0137
+    },
+    "f1": {
+      "primary (all features)": 0.6793,
+      "sensitivity (no opened_month)": 0.6754,
+      "difference (primary - sensitivity)": 0.0039
+    },
+    "recall": {
+      "primary (all features)": 0.7111,
+      "sensitivity (no opened_month)": 0.7608,
+      "difference (primary - sensitivity)": -0.0497
+    },
+    "precision": {
+      "primary (all features)": 0.6502,
+      "sensitivity (no opened_month)": 0.6072,
+      "difference (primary - sensitivity)": 0.043
+    },
+    "accuracy": {
+      "primary (all features)": 0.7507,
+      "sensitivity (no opened_month)": 0.7285,
+      "difference (primary - sensitivity)": 0.0222
+    }
+  },
+  "evaluated_at": "2026-10-01T14:47:49"
+}
