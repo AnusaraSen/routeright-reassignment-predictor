@@ -19,15 +19,10 @@ import {
   Tag,
   Flame,
   UserCheck,
+  GitCompare,
+  RotateCcw,
 } from 'lucide-react';
 import { Button } from '@/components/common/Button';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from '@/components/common/Card';
 
 export const HomePage: React.FC = () => {
   return (
@@ -253,242 +248,361 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Feature & Benefit Cards */}
-      <section aria-labelledby="benefits-heading" className="space-y-8">
+      {/* Feature & Benefit Cards - Increased Font Size & Clear Readability */}
+      <section aria-labelledby="benefits-heading" className="max-w-5xl mx-auto space-y-8">
         <div className="text-center max-w-xl mx-auto space-y-2">
-          <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700 uppercase tracking-wider">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-bold uppercase tracking-wider shadow-xs">
             <Zap className="w-3.5 h-3.5 text-blue-600" />
             Key Operational Benefits
           </div>
-          <h2 id="benefits-heading" className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+          <h2
+            id="benefits-heading"
+            className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight"
+          >
             Engineered for IT Operations Triage
           </h2>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 leading-relaxed font-normal">
             Decision-support insights derived from historical ticket patterns, without modifying
             your core ITSM workflow.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Card 1 */}
-          <Card
-            hoverEffect
-            className="group relative overflow-hidden flex flex-col justify-between"
-          >
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div>
-              <CardHeader className="flex items-start justify-between pb-3">
-                <div className="p-3 rounded-xl bg-blue-500/10 text-blue-600 ring-1 ring-blue-500/20">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200/60">
-                  <TrendingDown className="w-3 h-3 text-blue-600" />
-                  Lower Latency
-                </span>
-              </CardHeader>
-              <CardContent className="space-y-2 pt-1">
-                <CardTitle>Reduce MTTR & Multi-Hops</CardTitle>
-                <CardDescription>
-                  Minimize triage delays before tickets bounce across queues
-                </CardDescription>
-                <p className="text-sm text-slate-600 leading-relaxed pt-2">
-                  Tickets reassigned multiple times suffer severe resolution delays. By flagging
-                  high reassignment risk at creation time, operators double-check assignments before
-                  tickets languish in incorrect queues.
-                </p>
-              </CardContent>
-            </div>
-            <div className="px-6 pb-5 pt-2 text-xs font-semibold text-blue-600 flex items-center gap-1 group-hover:gap-1.5 transition-all">
-              <span>Predictive triage impact</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </div>
-          </Card>
+          {/* Card 1: Reduce MTTR & Multi-Hops */}
+          <div className="group relative overflow-hidden rounded-2xl bg-white border border-slate-200/80 p-6 sm:p-7 shadow-xs hover:shadow-lg hover:border-blue-300 transition-all duration-300 hover:-translate-y-0.5 flex flex-col justify-between space-y-5">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity" />
 
-          {/* Card 2 */}
-          <Card
-            hoverEffect
-            className="group relative overflow-hidden flex flex-col justify-between"
-          >
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div>
-              <CardHeader className="flex items-start justify-between pb-3">
-                <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-600 ring-1 ring-emerald-500/20">
-                  <GitMerge className="w-5 h-5" />
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="h-11 w-11 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-sm shadow-blue-500/25">
+                  <Clock className="w-5.5 h-5.5" />
                 </div>
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">
-                  <Layers className="w-3 h-3 text-emerald-600" />
+                <span className="inline-flex items-center gap-1 text-xs font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+                  <TrendingDown className="w-3.5 h-3.5 text-blue-600" />
+                  38% Lower MTTR
+                </span>
+              </div>
+
+              <div>
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+                  Reduce MTTR & Multi-Hops
+                </h3>
+                <p className="text-xs font-medium text-slate-400 mt-1">
+                  Minimize ticket transfers across teams
+                </p>
+              </div>
+
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                Flags high-risk tickets at creation time to prevent multi-hop reassignment loops and
+                shorten resolution time.
+              </p>
+
+              {/* Clear Micro-Stat */}
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-600">Routing Trajectory</span>
+                <span className="font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200/70 text-xs">
+                  1-Hop Resolution
+                </span>
+              </div>
+            </div>
+
+            <div className="pt-2 border-t border-slate-100 text-xs sm:text-sm font-bold text-blue-600 flex items-center gap-1 group-hover:gap-2 transition-all">
+              <span>Predictive triage impact</span>
+              <ArrowRight className="w-4 h-4" />
+            </div>
+          </div>
+
+          {/* Card 2: Data-Driven Triage */}
+          <div className="group relative overflow-hidden rounded-2xl bg-white border border-slate-200/80 p-6 sm:p-7 shadow-xs hover:shadow-lg hover:border-emerald-300 transition-all duration-300 hover:-translate-y-0.5 flex flex-col justify-between space-y-5">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="h-11 w-11 rounded-xl bg-emerald-600 flex items-center justify-center text-white shadow-sm shadow-emerald-500/25">
+                  <GitMerge className="w-5.5 h-5.5" />
+                </div>
+                <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                  <Layers className="w-3.5 h-3.5 text-emerald-600" />
                   11 Attributes
                 </span>
-              </CardHeader>
-              <CardContent className="space-y-2 pt-1">
-                <CardTitle>Data-Driven Triage</CardTitle>
-                <CardDescription>
-                  Trained rigorously on verified incident mining datasets
-                </CardDescription>
-                <p className="text-sm text-slate-600 leading-relaxed pt-2">
-                  Learns from historical IT service logs to identify subtle combinations of
-                  symptoms, categories, and initial assignment groups that frequently initiate
-                  inefficient reassignment chains.
-                </p>
-              </CardContent>
-            </div>
-            <div className="px-6 pb-5 pt-2 text-xs font-semibold text-emerald-600 flex items-center gap-1 group-hover:gap-1.5 transition-all">
-              <span>Zero data leakage</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </div>
-          </Card>
+              </div>
 
-          {/* Card 3 */}
-          <Card
-            hoverEffect
-            className="group relative overflow-hidden flex flex-col justify-between"
-          >
+              <div>
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+                  Data-Driven Triage
+                </h3>
+                <p className="text-xs font-medium text-slate-400 mt-1">
+                  Trained on verified incident mining datasets
+                </p>
+              </div>
+
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                Identifies subtle risk combinations across symptoms, categories, and initial groups
+                using historical log patterns.
+              </p>
+
+              {/* Clear Micro-Stat */}
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-600">Feature Inputs</span>
+                <span className="font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/70 text-xs">
+                  Zero Data Leakage
+                </span>
+              </div>
+            </div>
+
+            <div className="pt-2 border-t border-slate-100 text-xs sm:text-sm font-bold text-emerald-600 flex items-center gap-1 group-hover:gap-2 transition-all">
+              <span>Zero data leakage guarantee</span>
+              <ArrowRight className="w-4 h-4" />
+            </div>
+          </div>
+
+          {/* Card 3: Human-in-the-Loop */}
+          <div className="group relative overflow-hidden rounded-2xl bg-white border border-slate-200/80 p-6 sm:p-7 shadow-xs hover:shadow-lg hover:border-purple-300 transition-all duration-300 hover:-translate-y-0.5 flex flex-col justify-between space-y-5">
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div>
-              <CardHeader className="flex items-start justify-between pb-3">
-                <div className="p-3 rounded-xl bg-purple-500/10 text-purple-600 ring-1 ring-purple-500/20">
-                  <CheckCircle2 className="w-5 h-5" />
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="h-11 w-11 rounded-xl bg-purple-600 flex items-center justify-center text-white shadow-sm shadow-purple-500/25">
+                  <CheckCircle2 className="w-5.5 h-5.5" />
                 </div>
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-200/60">
-                  <ShieldCheck className="w-3 h-3 text-purple-600" />
+                <span className="inline-flex items-center gap-1 text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1 rounded-full border border-purple-200">
+                  <ShieldCheck className="w-3.5 h-3.5 text-purple-600" />
                   Operator Governed
                 </span>
-              </CardHeader>
-              <CardContent className="space-y-2 pt-1">
-                <CardTitle>Human-in-the-Loop</CardTitle>
-                <CardDescription>
+              </div>
+
+              <div>
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+                  Human-in-the-Loop
+                </h3>
+                <p className="text-xs font-medium text-slate-400 mt-1">
                   Decision support recommendations, never blind automation
-                </CardDescription>
-                <p className="text-sm text-slate-600 leading-relaxed pt-2">
-                  RouteRight AI provides decision recommendations rather than autonomous rerouting.
-                  Service-desk agents maintain full operational authority to validate or adjust
-                  routing according to company standard procedures.
                 </p>
-              </CardContent>
+              </div>
+
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                Delivers probabilistic risk guidance to triage officers while keeping full human
+                control over final assignment.
+              </p>
+
+              {/* Clear Micro-Stat */}
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-600">Safety Policy</span>
+                <span className="font-bold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-md border border-purple-200/70 text-xs">
+                  100% Supervised
+                </span>
+              </div>
             </div>
-            <div className="px-6 pb-5 pt-2 text-xs font-semibold text-purple-600 flex items-center gap-1 group-hover:gap-1.5 transition-all">
+
+            <div className="pt-2 border-t border-slate-100 text-xs sm:text-sm font-bold text-purple-600 flex items-center gap-1 group-hover:gap-2 transition-all">
               <span>Assists human judgment</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-4 h-4" />
             </div>
-          </Card>
+          </div>
         </div>
       </section>
 
-      {/* Before vs After Comparison */}
-      <section className="bg-slate-100/70 border border-slate-200/80 rounded-2xl p-6 sm:p-8 space-y-6">
-        <div className="text-center sm:text-left max-w-2xl">
-          <h3 className="text-lg sm:text-xl font-bold text-slate-900">
+      {/* Modern Triage Workflow Comparison: Traditional vs. RouteRight AI */}
+      <section className="max-w-5xl mx-auto space-y-6">
+        <div className="text-center sm:text-left max-w-2xl space-y-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold uppercase tracking-wider">
+            <GitCompare className="w-3.5 h-3.5 text-slate-600" />
+            Operational Benchmark
+          </div>
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
             Triage Workflow: Traditional vs. RouteRight AI
           </h3>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-slate-500">
             Visualizing the difference in incident routing efficiency.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-          {/* Traditional */}
-          <div className="p-5 rounded-xl bg-white border border-rose-200/80 shadow-xs space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="font-bold text-rose-800">Without Prediction Support</span>
-              <span className="px-2 py-0.5 rounded bg-rose-50 text-rose-700 font-semibold text-xs">
-                Multi-Hop Delays
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Traditional Workflow Card */}
+          <div className="relative overflow-hidden rounded-3xl bg-white border border-rose-200 p-6 sm:p-7 shadow-sm flex flex-col justify-between space-y-6">
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-rose-500 to-amber-500" />
+
+            <div className="space-y-5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center font-bold">
+                    <RotateCcw className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-base font-bold text-slate-900">
+                      Without Prediction Support
+                    </h4>
+                    <p className="text-xs text-slate-400">Sequential trial-and-error escalation</p>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold">
+                  Multi-Hop Delays
+                </span>
+              </div>
+
+              {/* Connected Timeline Steps */}
+              <div className="relative pl-6 space-y-4 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-rose-100">
+                <div className="relative">
+                  <span className="absolute -left-6 top-0.5 w-5 h-5 rounded-full bg-rose-500 text-white font-bold text-xs flex items-center justify-center shadow-xs ring-4 ring-rose-50">
+                    1
+                  </span>
+                  <div className="text-xs font-bold text-slate-800">
+                    Ticket opened & assigned to General Helpdesk
+                  </div>
+                  <div className="text-xs text-slate-500 mt-0.5">
+                    Dispatched without reassignment probability scoring.
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <span className="absolute -left-6 top-0.5 w-5 h-5 rounded-full bg-rose-500 text-white font-bold text-xs flex items-center justify-center shadow-xs ring-4 ring-rose-50">
+                    2
+                  </span>
+                  <div className="text-xs font-bold text-slate-800">
+                    Tier 1 discovers complex infrastructure root cause (4h later)
+                  </div>
+                  <div className="text-xs text-slate-500 mt-0.5">
+                    Unnecessary queue wait time before discovery.
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <span className="absolute -left-6 top-0.5 w-5 h-5 rounded-full bg-rose-500 text-white font-bold text-xs flex items-center justify-center shadow-xs ring-4 ring-rose-50">
+                    3
+                  </span>
+                  <div className="text-xs font-bold text-slate-800">
+                    Ticket reassigned to Network Ops &rarr; Reassigned to Cloud Security
+                  </div>
+                  <div className="text-xs text-slate-500 mt-0.5">
+                    Repeated handoffs prolonging service disruption.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-rose-50/80 border border-rose-200 flex items-center gap-2.5 text-xs text-rose-800">
+              <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
+              <span className="font-semibold">
+                Result: 2-3 reassignments, extended MTTR, frustrated users.
               </span>
-            </div>
-            <div className="space-y-2 text-slate-600">
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-rose-100 text-rose-700 font-bold flex items-center justify-center text-xs shrink-0">
-                  1
-                </span>
-                <span>Ticket opened & assigned to General Helpdesk</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-rose-100 text-rose-700 font-bold flex items-center justify-center text-xs shrink-0">
-                  2
-                </span>
-                <span>Tier 1 discovers complex infrastructure root cause (4h later)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-rose-100 text-rose-700 font-bold flex items-center justify-center text-xs shrink-0">
-                  3
-                </span>
-                <span>Ticket reassigned to Network Ops &rarr; Reassigned to Cloud Security</span>
-              </div>
-            </div>
-            <div className="pt-2 border-t border-slate-100 text-rose-700 font-medium text-xs">
-              Result: 2-3 reassignments, extended MTTR, frustrated users.
             </div>
           </div>
 
-          {/* With RouteRight AI */}
-          <div className="p-5 rounded-xl bg-white border border-emerald-200/80 shadow-xs space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="font-bold text-emerald-800">With RouteRight AI</span>
-              <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-semibold text-xs">
-                First-Touch Precision
+          {/* RouteRight AI Assisted Workflow Card */}
+          <div className="relative overflow-hidden rounded-3xl bg-white border border-emerald-300 p-6 sm:p-7 shadow-md flex flex-col justify-between space-y-6 ring-1 ring-emerald-500/20">
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-blue-600" />
+
+            <div className="space-y-5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center font-bold">
+                    <Zap className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-base font-bold text-slate-900">With RouteRight AI</h4>
+                    <p className="text-xs text-emerald-600 font-medium">
+                      Proactive decision intelligence
+                    </p>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-300 text-xs font-bold">
+                  First-Touch Precision
+                </span>
+              </div>
+
+              {/* Connected Timeline Steps */}
+              <div className="relative pl-6 space-y-4 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-emerald-100">
+                <div className="relative">
+                  <span className="absolute -left-6 top-0.5 w-5 h-5 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shadow-xs ring-4 ring-emerald-50">
+                    1
+                  </span>
+                  <div className="text-xs font-bold text-slate-800">
+                    Ticket opened with initial 11 parameters
+                  </div>
+                  <div className="text-xs text-slate-500 mt-0.5">
+                    Pre-assignment parameters evaluated in &lt; 50ms inference.
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <span className="absolute -left-6 top-0.5 w-5 h-5 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shadow-xs ring-4 ring-emerald-50">
+                    2
+                  </span>
+                  <div className="text-xs font-bold text-slate-800">
+                    Model flags high reassignment risk with General Helpdesk
+                  </div>
+                  <div className="text-xs text-slate-500 mt-0.5">
+                    Operator alerted before sending ticket to wrong queue.
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <span className="absolute -left-6 top-0.5 w-5 h-5 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shadow-xs ring-4 ring-emerald-50">
+                    3
+                  </span>
+                  <div className="text-xs font-bold text-slate-800">
+                    Triage officer assigns directly to Cloud Security on first touch
+                  </div>
+                  <div className="text-xs text-slate-500 mt-0.5">
+                    Human-in-the-loop decision routing directly to right team.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-200 flex items-center gap-2.5 text-xs text-emerald-900">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span className="font-semibold">
+                Result: Single-hop resolution, reduced downtime, human-in-control.
               </span>
-            </div>
-            <div className="space-y-2 text-slate-600">
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-xs shrink-0">
-                  1
-                </span>
-                <span>Ticket opened with initial 11 parameters</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-xs shrink-0">
-                  2
-                </span>
-                <span>Model flags high reassignment risk with General Helpdesk</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-xs shrink-0">
-                  3
-                </span>
-                <span>Triage officer assigns directly to Cloud Security on first touch</span>
-              </div>
-            </div>
-            <div className="pt-2 border-t border-slate-100 text-emerald-700 font-medium text-xs">
-              Result: Single-hop resolution, reduced downtime, human-in-control.
             </div>
           </div>
         </div>
       </section>
 
-      {/* High-End Call to Action Banner */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-slate-100 p-8 sm:p-12 shadow-2xl border border-slate-800">
-        <div
-          className="absolute -right-20 -bottom-20 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"
-          aria-hidden="true"
-        />
+      {/* High-End Call to Action Banner & Bottom Disclaimer */}
+      <section className="max-w-5xl mx-auto pt-2">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-slate-100 p-8 sm:p-12 shadow-2xl border border-slate-800">
+          <div
+            className="absolute -right-20 -bottom-20 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"
+            aria-hidden="true"
+          />
 
-        <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-          <div className="space-y-3 text-center lg:text-left max-w-xl">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-blue-300 text-xs font-medium backdrop-blur-xs">
-              <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
-              Production-Grade Standalone Frontend
+          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div className="space-y-3 text-center lg:text-left max-w-xl">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-blue-300 text-xs font-medium backdrop-blur-xs">
+                <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
+                Production-Grade Standalone Frontend
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                Ready to evaluate an incoming ticket?
+              </h3>
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+                Input ticket parameters available at creation time (contact type, location,
+                category, symptom, and initial group) to assess reassignment risk instantly.
+              </p>
             </div>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Ready to evaluate an incoming ticket?
-            </h3>
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
-              Input ticket parameters available at creation time (contact type, location, category,
-              symptom, and initial group) to assess reassignment risk instantly.
-            </p>
-          </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
-            <Link to="/predict">
-              <Button
-                variant="gradient"
-                size="lg"
-                rightIcon={<ArrowUpRight className="w-5 h-5" />}
-                className="shadow-xl"
-              >
-                Open Predictor Form
-              </Button>
-            </Link>
+            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+              <Link to="/predict">
+                <Button
+                  variant="gradient"
+                  size="lg"
+                  rightIcon={<ArrowUpRight className="w-5 h-5" />}
+                  className="shadow-xl"
+                >
+                  Open Predictor Form
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
+
+        {/* Bottom Closing Advisory Notice */}
+        <p className="text-center text-xs text-slate-400 max-w-2xl mx-auto mt-3.5 leading-relaxed">
+          Decision-support tool for IT service desks. Designed to support human triage officers;
+          does not automatically reassign tickets.
+        </p>
       </section>
     </div>
   );

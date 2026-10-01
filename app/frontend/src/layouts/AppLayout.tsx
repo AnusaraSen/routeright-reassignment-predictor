@@ -25,6 +25,7 @@ export const AppLayout: React.FC = () => {
               aria-label="RouteRight AI"
               className="flex flex-col group focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-xl p-1 transition-all"
             >
+              <span className="sr-only">RouteRight AI</span>
               <div className="flex items-center space-x-2.5">
                 <span className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 leading-none group-hover:text-blue-600 transition-colors">
                   RouteRight
@@ -128,23 +129,6 @@ export const AppLayout: React.FC = () => {
       <main className="flex-1 w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-8 sm:py-10">
         <Outlet />
       </main>
-
-      {/* Modern Refined Footer */}
-      <footer className="bg-white border-t border-slate-200/80 mt-auto py-8">
-        <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <div className="flex items-center space-x-2">
-            <span className="font-bold text-slate-800">RouteRight AI</span>
-            <span>&bull;</span>
-            <span>IT3051 Fundamentals of Data Mining</span>
-            <span className="hidden sm:inline">&bull;</span>
-            <span className="hidden sm:inline">Incident Triage Intelligence</span>
-          </div>
-          <p className="text-center md:text-right max-w-xl text-slate-400">
-            Decision-support tool for IT service desks. Designed to support human triage officers;
-            does not automatically reassign tickets.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 };
