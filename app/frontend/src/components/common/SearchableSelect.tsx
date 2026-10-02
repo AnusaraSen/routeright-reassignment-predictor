@@ -183,7 +183,11 @@ export const SearchableSelect: React.FC<SearchableSelectProps> = ({
           aria-expanded={isOpen}
           aria-controls={listboxId}
           aria-labelledby={label ? undefined : selectId}
-          className={`w-full text-xs font-semibold rounded-xl px-3 py-2.5 text-left transition-all duration-150 flex items-center justify-between gap-2 shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 ${
+          aria-invalid={Boolean(error)}
+          aria-describedby={
+            error ? `${selectId}-error` : helperText ? `${selectId}-helper` : undefined
+          }
+          className={`w-full text-xs font-semibold rounded-xl px-3 py-2.5 text-left transition-all duration-150 flex items-center justify-between gap-2 shadow-2xs focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600 ${
             disabled ? 'bg-slate-100 text-slate-400 cursor-not-allowed border-slate-200' : 'cursor-pointer'
           } ${
             error
@@ -193,7 +197,10 @@ export const SearchableSelect: React.FC<SearchableSelectProps> = ({
               : 'bg-white border border-slate-300 text-slate-800 hover:border-slate-400'
           }`}
         >
-          <span className={`truncate ${!selectedOption ? 'text-slate-400 font-normal' : ''}`}>
+          <span
+            className={`truncate ${!selectedOption ? 'text-slate-400 font-normal' : ''}`}
+            title={selectedOption ? selectedOption.label : undefined}
+          >
             {selectedOption ? selectedOption.label : placeholder}
           </span>
 
@@ -268,7 +275,9 @@ export const SearchableSelect: React.FC<SearchableSelectProps> = ({
                           : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
                       }`}
                     >
-                      <span className="truncate">{opt.label}</span>
+                      <span className="truncate" title={opt.label}>
+                        {opt.label}
+                      </span>
                       {isSelected && (
                         <Check className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                       )}
@@ -287,9 +296,13 @@ export const SearchableSelect: React.FC<SearchableSelectProps> = ({
 
       {/* Field Helper Text or Error */}
       {error ? (
-        <p className="text-[11px] font-medium text-rose-500">{error}</p>
+        <p id={`${selectId}-error`} role="alert" className="text-[11px] font-medium text-rose-500">
+          {error}
+        </p>
       ) : helperText ? (
-        <p className="text-[11px] text-slate-400">{helperText}</p>
+        <p id={`${selectId}-helper`} className="text-[11px] text-slate-400">
+          {helperText}
+        </p>
       ) : null}
     </div>
   );

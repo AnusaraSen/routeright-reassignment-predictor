@@ -20,6 +20,7 @@ export const ErrorBanner: React.FC<ErrorBannerProps> = ({
   return (
     <div
       role="alert"
+      aria-live="assertive"
       className={`rounded-2xl bg-rose-50/90 border border-rose-200/90 p-4 sm:p-5 shadow-xs transition-all animate-in fade-in-0 duration-200 ${className}`}
     >
       <div className="flex items-start justify-between gap-3">

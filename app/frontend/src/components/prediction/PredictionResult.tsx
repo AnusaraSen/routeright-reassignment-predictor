@@ -58,7 +58,9 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
 
       {/* Outcome Verdict Card */}
       <div
-        className={`p-4 sm:p-5 rounded-2xl border transition-all ${
+        aria-live="polite"
+        aria-atomic="true"
+        className={`p-4 sm:p-5 rounded-2xl border transition-all break-words ${
           isReassignmentRequired
             ? 'bg-rose-950/40 border-rose-500/40 text-rose-200'
             : 'bg-emerald-950/40 border-emerald-500/40 text-emerald-200'

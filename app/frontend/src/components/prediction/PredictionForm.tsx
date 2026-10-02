@@ -168,8 +168,10 @@ export const PredictionForm: React.FC<PredictionFormProps> = ({
                 <input
                   id="opened_at"
                   type="datetime-local"
+                  aria-invalid={Boolean(errors.opened_at)}
+                  aria-describedby={errors.opened_at ? 'opened_at-error' : undefined}
                   {...register('opened_at')}
-                  className={`w-full text-xs font-semibold rounded-xl px-3 py-2.5 shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-colors ${
+                  className={`w-full text-xs font-semibold rounded-xl px-3 py-2.5 shadow-2xs focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600 transition-colors ${
                     errors.opened_at
                       ? 'bg-rose-50/30 border border-rose-300 text-slate-900 focus:border-rose-500'
                       : 'bg-white border border-slate-300 text-slate-800 hover:border-slate-400 focus:border-blue-500'
@@ -177,7 +179,9 @@ export const PredictionForm: React.FC<PredictionFormProps> = ({
                 />
               </div>
               {errors.opened_at && (
-                <p className="text-[11px] font-medium text-rose-500">{errors.opened_at.message}</p>
+                <p id="opened_at-error" role="alert" className="text-[11px] font-medium text-rose-500">
+                  {errors.opened_at.message}
+                </p>
               )}
             </div>
 
@@ -208,8 +212,10 @@ export const PredictionForm: React.FC<PredictionFormProps> = ({
               </label>
               <select
                 id="contact_type"
+                aria-invalid={Boolean(errors.contact_type)}
+                aria-describedby={errors.contact_type ? 'contact_type-error' : undefined}
                 {...register('contact_type')}
-                className={`w-full text-xs font-semibold rounded-xl px-3 py-2.5 shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 hover:border-slate-400 transition-colors ${
+                className={`w-full text-xs font-semibold rounded-xl px-3 py-2.5 shadow-2xs focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600 hover:border-slate-400 transition-colors ${
                   errors.contact_type
                     ? 'bg-rose-50/30 border border-rose-300 text-slate-900 focus:border-rose-500'
                     : 'bg-white border border-slate-300 text-slate-800 focus:border-blue-500'
@@ -223,7 +229,7 @@ export const PredictionForm: React.FC<PredictionFormProps> = ({
                 ))}
               </select>
               {errors.contact_type && (
-                <p className="text-[11px] font-medium text-rose-500">
+                <p id="contact_type-error" role="alert" className="text-[11px] font-medium text-rose-500">
                   {errors.contact_type.message}
                 </p>
               )}
@@ -343,13 +349,21 @@ export const PredictionForm: React.FC<PredictionFormProps> = ({
               <label className="block text-xs font-bold text-slate-700">
                 Impact <span className="text-rose-500">*</span>
               </label>
-              <div className="grid grid-cols-3 gap-1">
+              <div
+                role="radiogroup"
+                aria-label="Impact Level"
+                aria-invalid={Boolean(errors.impact)}
+                aria-describedby={errors.impact ? 'impact-error' : undefined}
+                className="grid grid-cols-3 gap-1"
+              >
                 {['1 - High', '2 - Medium', '3 - Low'].map((val) => (
                   <button
                     key={val}
                     type="button"
+                    role="radio"
+                    aria-checked={selectedImpact === val}
                     onClick={() => setValue('impact', val, { shouldValidate: true })}
-                    className={`py-2 text-[11px] font-bold rounded-lg border transition-all cursor-pointer ${
+                    className={`py-2 text-[11px] font-bold rounded-lg border transition-all cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-1 ${
                       selectedImpact === val
                         ? 'bg-blue-600 text-white border-blue-600 shadow-xs ring-1 ring-blue-600'
                         : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100 shadow-2xs'
@@ -360,7 +374,9 @@ export const PredictionForm: React.FC<PredictionFormProps> = ({
                 ))}
               </div>
               {errors.impact && (
-                <p className="text-[11px] font-medium text-rose-500">{errors.impact.message}</p>
+                <p id="impact-error" role="alert" className="text-[11px] font-medium text-rose-500">
+                  {errors.impact.message}
+                </p>
               )}
             </div>
 
@@ -369,13 +385,21 @@ export const PredictionForm: React.FC<PredictionFormProps> = ({
               <label className="block text-xs font-bold text-slate-700">
                 Urgency <span className="text-rose-500">*</span>
               </label>
-              <div className="grid grid-cols-3 gap-1">
+              <div
+                role="radiogroup"
+                aria-label="Urgency Level"
+                aria-invalid={Boolean(errors.urgency)}
+                aria-describedby={errors.urgency ? 'urgency-error' : undefined}
+                className="grid grid-cols-3 gap-1"
+              >
                 {['1 - High', '2 - Medium', '3 - Low'].map((val) => (
                   <button
                     key={val}
                     type="button"
+                    role="radio"
+                    aria-checked={selectedUrgency === val}
                     onClick={() => setValue('urgency', val, { shouldValidate: true })}
-                    className={`py-2 text-[11px] font-bold rounded-lg border transition-all cursor-pointer ${
+                    className={`py-2 text-[11px] font-bold rounded-lg border transition-all cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-1 ${
                       selectedUrgency === val
                         ? 'bg-blue-600 text-white border-blue-600 shadow-xs ring-1 ring-blue-600'
                         : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100 shadow-2xs'
@@ -386,7 +410,9 @@ export const PredictionForm: React.FC<PredictionFormProps> = ({
                 ))}
               </div>
               {errors.urgency && (
-                <p className="text-[11px] font-medium text-rose-500">{errors.urgency.message}</p>
+                <p id="urgency-error" role="alert" className="text-[11px] font-medium text-rose-500">
+                  {errors.urgency.message}
+                </p>
               )}
             </div>
 
@@ -397,8 +423,10 @@ export const PredictionForm: React.FC<PredictionFormProps> = ({
               </label>
               <select
                 id="priority"
+                aria-invalid={Boolean(errors.priority)}
+                aria-describedby={errors.priority ? 'priority-error' : undefined}
                 {...register('priority')}
-                className={`w-full text-xs font-semibold rounded-xl px-3 py-2.5 shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 hover:border-slate-400 transition-colors ${
+                className={`w-full text-xs font-semibold rounded-xl px-3 py-2.5 shadow-2xs focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600 hover:border-slate-400 transition-colors ${
                   errors.priority
                     ? 'bg-rose-50/30 border border-rose-300 text-slate-900 focus:border-rose-500'
                     : 'bg-white border border-slate-300 text-slate-800 focus:border-blue-500'
@@ -411,7 +439,9 @@ export const PredictionForm: React.FC<PredictionFormProps> = ({
                 ))}
               </select>
               {errors.priority && (
-                <p className="text-[11px] font-medium text-rose-500">{errors.priority.message}</p>
+                <p id="priority-error" role="alert" className="text-[11px] font-medium text-rose-500">
+                  {errors.priority.message}
+                </p>
               )}
             </div>
 

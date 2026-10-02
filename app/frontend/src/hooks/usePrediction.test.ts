@@ -81,7 +81,7 @@ describe('usePrediction Hook', () => {
     expect(result.current.status).toBe('error');
     expect(result.current.isError).toBe(true);
     expect(result.current.isLoading).toBe(false);
-    expect(result.current.error).toBe('Inference server timeout');
+    expect(result.current.error).toBe('Prediction service is taking too long. Please retry.');
     expect(result.current.result).toBeNull();
   });
 

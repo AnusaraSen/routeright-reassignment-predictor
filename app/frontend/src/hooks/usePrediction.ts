@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { mockPredict } from '@/mocks/prediction';
 import { PredictionFormData, PredictionResponse } from '@/types/prediction';
+import { normalizePredictionError } from '@/utils/errors';
 
 export type PredictionStatus = 'idle' | 'loading' | 'success' | 'error';
 
@@ -33,7 +34,7 @@ export const usePrediction = (): UsePredictionReturn => {
       setStatus('success');
       return response;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred during prediction.';
+      const errorMessage = normalizePredictionError(err);
       setError(errorMessage);
       setStatus('error');
       return null;
