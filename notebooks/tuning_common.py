@@ -151,8 +151,11 @@ def describe_space(name: str) -> pd.DataFrame:
     rows = []
     for p, dist in SEARCH_SPACES[name].items():
         if hasattr(dist, "rvs"):
-            args = getattr(dist, "args", ())
-            desc = f"log-uniform between {args[0]:g} and {args[1]:g}"
+            args = list(getattr(dist, "args", ()))
+            if len(args) >= 2:
+                desc = f"log-uniform between {args[0]:g} and {args[1]:g}"
+            else:
+                desc = str(dist)
         else:
             desc = ", ".join(str(v) for v in dist)
         rows.append({"hyperparameter": clean_name(p), "candidate values": desc})
