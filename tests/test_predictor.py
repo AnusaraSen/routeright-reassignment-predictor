@@ -193,22 +193,33 @@ def test_real_prediction_contract(
     assert isinstance(result, dict)
     assert "prediction" in result
     assert "probability" in result
-    assert "risk_label" in result
-    assert "threshold" in result
+    assert "label" in result
+    assert "risk_level" in result
+    assert "decision_threshold" in result
+    assert "model_name" in result
+    assert "status" in result
+    assert "inference_time_ms" in result
 
     assert result["prediction"] in (0, 1)
     assert isinstance(result["probability"], float)
     assert 0.0 <= result["probability"] <= 1.0
-    assert result["risk_label"] in ("Low Risk", "High Risk")
-    assert result["threshold"] == predictor.threshold
+    assert result["label"] in ("Reassignment Required", "No Reassignment Required")
+    assert result["risk_level"] in ("low", "medium", "high")
+    assert result["decision_threshold"] == predictor.threshold
+    assert result["model_name"] == "Random Forest"
+    assert result["status"] == "success"
+    assert isinstance(result["inference_time_ms"], float)
+    assert result["inference_time_ms"] >= 0
 
-    # Verify risk_label consistency with prediction
+    # Verify label and risk-level consistency with prediction
     if result["prediction"] == 1:
-        assert result["risk_label"] == "High Risk"
-        assert result["probability"] >= result["threshold"]
+        assert result["label"] == "Reassignment Required"
+        assert result["risk_level"] == "high"
+        assert result["probability"] >= result["decision_threshold"]
     else:
-        assert result["risk_label"] == "Low Risk"
-        assert result["probability"] < result["threshold"]
+        assert result["label"] == "No Reassignment Required"
+        assert result["risk_level"] == "low"
+        assert result["probability"] < result["decision_threshold"]
 
 
 # =============================================================================
@@ -236,7 +247,7 @@ def test_missing_optional_categorical_fields(
 
     assert result["prediction"] in (0, 1)
     assert 0.0 <= result["probability"] <= 1.0
-    assert result["risk_label"] in ("Low Risk", "High Risk")
+    assert result["risk_level"] in ("low", "medium", "high")
 
 
 # =============================================================================
@@ -264,7 +275,7 @@ def test_unseen_categorical_values(
 
     assert result["prediction"] in (0, 1)
     assert 0.0 <= result["probability"] <= 1.0
-    assert result["risk_label"] in ("Low Risk", "High Risk")
+    assert result["risk_level"] in ("low", "medium", "high")
 
 
 # =============================================================================

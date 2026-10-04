@@ -83,26 +83,29 @@ class IncidentPredictionResponse(BaseModel):
     """
     Output schema for incident ticket reassignment prediction.
     """
-    reassignment_required: int = Field(
+    prediction: Literal[0, 1] = Field(
         description="Binary prediction: 1 = Reassignment Required, 0 = No Reassignment"
     )
-    reassignment_probability: float = Field(
+    label: str = Field(
+        description="Human-readable prediction label"
+    )
+    probability: float = Field(
         description="Predicted probability score for reassignment requirement (0.0 to 1.0)"
     )
-    risk_label: str = Field(
-        description="Categorical risk rating: 'Low Risk' or 'High Risk'"
+    risk_level: Literal["low", "medium", "high"] = Field(
+        description="Categorical risk rating"
     )
     decision_threshold: float = Field(
-        default=0.5,
         description="Classification decision threshold used by the Random Forest model"
     )
     model_name: str = Field(
-        default="Random Forest",
         description="Name of final model used for prediction"
     )
-    status: str = Field(
-        default="success",
+    status: Literal["success"] = Field(
         description="Execution status of prediction request"
+    )
+    inference_time_ms: float = Field(
+        description="Prediction inference duration in milliseconds"
     )
 
 

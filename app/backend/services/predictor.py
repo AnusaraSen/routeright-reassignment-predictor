@@ -6,6 +6,7 @@ and artifact configurations established during model training.
 """
 
 import json
+import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
@@ -320,9 +321,15 @@ class ReassignmentPredictor:
             Dict containing:
                 - prediction (int): 0 (No Reassignment) or 1 (Reassignment Required)
                 - probability (float): Model confidence for positive class [0.0, 1.0]
-                - risk_label (str): "Low Risk" or "High Risk"
-                - threshold (float): Decision threshold used (from metadata)
+                - label (str): Human-readable prediction label
+                - risk_level (str): Lowercase risk rating
+                - decision_threshold (float): Decision threshold used
+                - model_name (str): Name of the trained model
+                - status (str): Prediction status
+                - inference_time_ms (float): Inference duration in milliseconds
         """
+        start_time = time.perf_counter()
+
         if not self.is_loaded:
             self.load_artifacts()
 
@@ -358,13 +365,19 @@ class ReassignmentPredictor:
 
         # Step 7: Apply decision threshold
         prediction = 1 if pos_prob >= self.threshold else 0
-        risk_label = "High Risk" if prediction == 1 else "Low Risk"
+        label = "Reassignment Required" if prediction == 1 else "No Reassignment Required"
+        risk_level = "high" if prediction == 1 else "low"
+        inference_time_ms = (time.perf_counter() - start_time) * 1000
 
         return {
             "prediction": prediction,
             "probability": round(pos_prob, 4),
-            "risk_label": risk_label,
-            "threshold": self.threshold,
+            "label": label,
+            "risk_level": risk_level,
+            "decision_threshold": self.threshold,
+            "model_name": self.meta.get("model", "Random Forest"),
+            "status": "success",
+            "inference_time_ms": round(inference_time_ms, 2),
         }
 
 

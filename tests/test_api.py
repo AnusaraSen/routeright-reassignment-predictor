@@ -74,21 +74,26 @@ def test_predict_endpoint_valid_payload(client: TestClient, valid_ticket_payload
     assert response.status_code == 200
     data = response.json()
 
-    assert data["reassignment_required"] in (0, 1)
-    assert isinstance(data["reassignment_probability"], float)
-    assert 0.0 <= data["reassignment_probability"] <= 1.0
-    assert data["risk_label"] in ("Low Risk", "High Risk")
+    assert data["prediction"] in (0, 1)
+    assert isinstance(data["probability"], float)
+    assert 0.0 <= data["probability"] <= 1.0
+    assert data["label"] in ("Reassignment Required", "No Reassignment Required")
+    assert data["risk_level"] in ("low", "medium", "high")
     assert data["decision_threshold"] == 0.5
     assert data["model_name"] == "Random Forest"
     assert data["status"] == "success"
+    assert isinstance(data["inference_time_ms"], float)
+    assert data["inference_time_ms"] >= 0
 
-    # Verify risk_label consistency with threshold
-    if data["reassignment_required"] == 1:
-        assert data["risk_label"] == "High Risk"
-        assert data["reassignment_probability"] >= data["decision_threshold"]
+    # Verify label and risk-level consistency with threshold
+    if data["prediction"] == 1:
+        assert data["label"] == "Reassignment Required"
+        assert data["risk_level"] == "high"
+        assert data["probability"] >= data["decision_threshold"]
     else:
-        assert data["risk_label"] == "Low Risk"
-        assert data["reassignment_probability"] < data["decision_threshold"]
+        assert data["label"] == "No Reassignment Required"
+        assert data["risk_level"] == "low"
+        assert data["probability"] < data["decision_threshold"]
 
 
 def test_predict_endpoint_missing_optional_fields(client: TestClient):
@@ -110,7 +115,7 @@ def test_predict_endpoint_missing_optional_fields(client: TestClient):
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "success"
-    assert data["reassignment_required"] in (0, 1)
+    assert data["prediction"] in (0, 1)
 
 
 def test_predict_endpoint_unseen_categories(client: TestClient):
@@ -132,7 +137,7 @@ def test_predict_endpoint_unseen_categories(client: TestClient):
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "success"
-    assert data["reassignment_required"] in (0, 1)
+    assert data["prediction"] in (0, 1)
 
 
 # =============================================================================
@@ -236,4 +241,3 @@ def test_predict_internal_server_error_sanitization(client: TestClient, valid_ti
     assert "Secret internal failure" not in data["detail"]
     assert "/root/secret/file.py" not in data["detail"]
     assert data["detail"] == "An internal error occurred while processing the prediction."
-
