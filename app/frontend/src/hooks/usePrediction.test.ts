@@ -1,11 +1,11 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { usePrediction } from './usePrediction';
-import * as mockApi from '@/mocks/prediction';
+import * as api from '@/api';
 import { PredictionFormData } from '@/types/prediction';
 
-vi.mock('@/mocks/prediction', () => ({
-  mockPredict: vi.fn(),
+vi.mock('@/api', () => ({
+  predictIncident: vi.fn(),
 }));
 
 describe('usePrediction Hook', () => {
@@ -50,7 +50,7 @@ describe('usePrediction Hook', () => {
       inference_time_ms: 40,
     };
 
-    vi.mocked(mockApi.mockPredict).mockResolvedValueOnce(mockResponse);
+    vi.mocked(api.predictIncident).mockResolvedValueOnce(mockResponse);
 
     const { result } = renderHook(() => usePrediction());
 
@@ -74,7 +74,7 @@ describe('usePrediction Hook', () => {
   });
 
   it('transitions to error on prediction failure', async () => {
-    vi.mocked(mockApi.mockPredict).mockRejectedValueOnce(new Error('Inference server timeout'));
+    vi.mocked(api.predictIncident).mockRejectedValueOnce(new Error('Inference server timeout'));
 
     const { result } = renderHook(() => usePrediction());
 
@@ -90,7 +90,7 @@ describe('usePrediction Hook', () => {
   });
 
   it('supports retry using stored last payload', async () => {
-    vi.mocked(mockApi.mockPredict)
+    vi.mocked(api.predictIncident)
       .mockRejectedValueOnce(new Error('Network failure'))
       .mockResolvedValueOnce({
         prediction: 0,
@@ -122,7 +122,7 @@ describe('usePrediction Hook', () => {
   });
 
   it('resets state back to idle on reset()', async () => {
-    vi.mocked(mockApi.mockPredict).mockResolvedValueOnce({
+    vi.mocked(api.predictIncident).mockResolvedValueOnce({
       prediction: 0,
       label: 'No Reassignment Required',
       probability: 0.1,
