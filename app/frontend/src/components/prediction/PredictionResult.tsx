@@ -21,9 +21,6 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
   className = '',
 }) => {
   const isReassignmentRequired = result.prediction === 1;
-  const hasProbability = typeof result.probability === 'number' && !Number.isNaN(result.probability);
-
-  // Exact required wording per specifications
   const primaryOutcomeText = isReassignmentRequired
     ? 'Reassignment Required'
     : 'No Reassignment Required';
@@ -32,7 +29,7 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
     ? 'Review the initial routing before the incident proceeds further.'
     : 'The current routing is predicted to remain appropriate based on the submitted details.';
 
-  const probabilityPercent = hasProbability ? Math.round(result.probability * 100) : 0;
+  const probabilityPercent = result.probability * 100;
 
   return (
     <div
@@ -50,7 +47,7 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
         </div>
         <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          {result.inference_time_ms ? `${result.inference_time_ms}ms Inference` : '< 50ms Inference'}
+          {result.inference_time_ms}ms Inference
         </span>
       </div>
 
@@ -89,7 +86,7 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
             isReassignmentRequired ? 'text-rose-100' : 'text-emerald-100'
           }`}
         >
-          {primaryOutcomeText}
+          {result.label}
         </h3>
 
         {/* Mandated Supporting Guidance */}
@@ -98,9 +95,7 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
         </p>
       </div>
 
-      {/* Optional Probability Display - Only rendered when probability exists */}
-      {hasProbability && (
-        <div className="space-y-2 pt-1" data-testid="probability-section">
+      <div className="space-y-2 pt-1" data-testid="probability-section">
           <div className="flex items-baseline justify-between">
             <span className="text-xs text-slate-300 font-medium">
               Reassignment Probability
@@ -110,7 +105,7 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
                 isReassignmentRequired ? 'text-rose-400' : 'text-emerald-400'
               }`}
             >
-              {probabilityPercent}%
+              {probabilityPercent.toFixed(1)}%
             </span>
           </div>
 
@@ -131,16 +126,17 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
 
           <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
             <span>Risk Level</span>
-            <span className="font-semibold text-slate-300 capitalize">{result.risk_level}</span>
+            <span className="font-semibold text-slate-300 capitalize">
+              {result.risk_level} Risk
+            </span>
           </div>
           <div className="flex items-center justify-between text-[11px] text-slate-400">
             <span>Decision Threshold</span>
             <span className="font-semibold text-slate-300">
-              {Math.round(result.decision_threshold * 100)}%
+              {(result.decision_threshold * 100).toFixed(0)}%
             </span>
           </div>
         </div>
-      )}
 
       <div className="p-4 rounded-2xl bg-slate-800/80 border border-slate-700/80 space-y-1.5">
         <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">

@@ -40,7 +40,8 @@ describe('PredictionResult Component', () => {
     ).toBeInTheDocument();
 
     // Probability and model metadata
-    expect(screen.getByText('84%')).toBeInTheDocument();
+    expect(screen.getByText('84.0%')).toBeInTheDocument();
+    expect(screen.getByText('high Risk')).toBeInTheDocument();
     expect(screen.getByText('Random Forest · API status: success')).toBeInTheDocument();
   });
 
@@ -59,7 +60,7 @@ describe('PredictionResult Component', () => {
     ).toBeInTheDocument();
 
     // Probability
-    expect(screen.getByText('14%')).toBeInTheDocument();
+    expect(screen.getByText('14.0%')).toBeInTheDocument();
   });
 
   it('renders the non-overclaiming decision-support notice', () => {
@@ -69,24 +70,6 @@ describe('PredictionResult Component', () => {
       screen.getByText(/The result is a prediction for decision support, not a guarantee/i)
     ).toBeInTheDocument();
     expect(screen.getByText(/Do not label users or teams as incorrect/i)).toBeInTheDocument();
-  });
-
-  it('does NOT render the probability section when probability is undefined', () => {
-    const resultWithoutProb: PredictionResponse = {
-      prediction: 1,
-      label: 'Reassignment Required',
-      probability: undefined as unknown as number,
-      risk_level: 'high',
-      decision_threshold: 0.5,
-      model_name: 'Random Forest',
-      status: 'success',
-      inference_time_ms: 38,
-    };
-
-    render(<PredictionResult result={resultWithoutProb} />);
-
-    expect(screen.queryByTestId('probability-section')).not.toBeInTheDocument();
-    expect(screen.queryByText(/Reassignment Probability/i)).not.toBeInTheDocument();
   });
 
   it('calls onStartNew callback when "Start New Prediction" button is clicked', async () => {
