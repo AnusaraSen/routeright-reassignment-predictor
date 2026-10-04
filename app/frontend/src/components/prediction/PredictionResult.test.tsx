@@ -9,10 +9,10 @@ describe('PredictionResult Component', () => {
     prediction: 1,
     label: 'Reassignment Required',
     probability: 0.84,
-    confidence: 0.88,
-    diagnosis: 'Historical triage logs indicate potential bounce.',
-    recommendation: 'Route directly to Network Operations L2.',
-    estimated_savings: 'Saves ~4.5 Hours MTTR.',
+    risk_level: 'high',
+    decision_threshold: 0.5,
+    model_name: 'Random Forest',
+    status: 'success',
     inference_time_ms: 38,
   };
 
@@ -20,9 +20,10 @@ describe('PredictionResult Component', () => {
     prediction: 0,
     label: 'No Reassignment Required',
     probability: 0.14,
-    confidence: 0.92,
-    diagnosis: 'Specialist domain matches the reported symptom profile.',
-    recommendation: 'Confirm current routing to target specialist team.',
+    risk_level: 'low',
+    decision_threshold: 0.5,
+    model_name: 'Random Forest',
+    status: 'success',
     inference_time_ms: 42,
   };
 
@@ -38,16 +39,9 @@ describe('PredictionResult Component', () => {
       screen.getByText('Review the initial routing before the incident proceeds further.')
     ).toBeInTheDocument();
 
-    // Probability & Confidence
+    // Probability and model metadata
     expect(screen.getByText('84%')).toBeInTheDocument();
-    expect(screen.getByText('88%')).toBeInTheDocument();
-
-    // Diagnosis & Recommendation
-    expect(
-      screen.getByText('Historical triage logs indicate potential bounce.')
-    ).toBeInTheDocument();
-    expect(screen.getByText('Route directly to Network Operations L2.')).toBeInTheDocument();
-    expect(screen.getByText('Saves ~4.5 Hours MTTR.')).toBeInTheDocument();
+    expect(screen.getByText('Random Forest · API status: success')).toBeInTheDocument();
   });
 
   it('renders negative outcome (prediction = 0) with exact required primary and supporting texts', () => {
@@ -82,7 +76,11 @@ describe('PredictionResult Component', () => {
       prediction: 1,
       label: 'Reassignment Required',
       probability: undefined as unknown as number,
-      diagnosis: 'Diagnostic note without numeric probability.',
+      risk_level: 'high',
+      decision_threshold: 0.5,
+      model_name: 'Random Forest',
+      status: 'success',
+      inference_time_ms: 38,
     };
 
     render(<PredictionResult result={resultWithoutProb} />);

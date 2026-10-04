@@ -24,11 +24,9 @@ export const mockPredict = async (formData: PredictionFormData): Promise<Predict
       label: 'Reassignment Required',
       probability: isHighUrgency ? 0.84 : 0.78,
       risk_level: 'high',
-      confidence: 0.88,
-      diagnosis:
-        'Historical triage logs show 82.4% of tickets with this symptom/category bounce when initially routed to General L1.',
-      recommendation: 'Route directly to Network Operations L2 or Cloud Infrastructure.',
-      estimated_savings: 'Saves ~4.5 Hours MTTR & eliminates 2 triage hops.',
+      decision_threshold: 0.5,
+      model_name: 'Random Forest',
+      status: 'success',
       inference_time_ms: 38,
     };
   }
@@ -40,11 +38,9 @@ export const mockPredict = async (formData: PredictionFormData): Promise<Predict
       label: 'No Reassignment Required',
       probability: 0.14,
       risk_level: 'low',
-      confidence: 0.92,
-      diagnosis:
-        'Specialist domain matches the reported symptom profile. First-touch resolution probability is high.',
-      recommendation: 'Confirm current routing to target specialist team.',
-      estimated_savings: 'Optimal first-touch path identified.',
+      decision_threshold: 0.5,
+      model_name: 'Random Forest',
+      status: 'success',
       inference_time_ms: 42,
     };
   }
@@ -59,16 +55,9 @@ export const mockPredict = async (formData: PredictionFormData): Promise<Predict
     label: prediction === 1 ? 'Reassignment Required' : 'No Reassignment Required',
     probability,
     risk_level: prediction === 1 ? 'medium' : 'low',
-    confidence: 0.85,
-    diagnosis:
-      prediction === 1
-        ? 'Secondary reassignment risk detected based on cross-team transfer logs.'
-        : 'Ticket attributes align with standard single-queue resolution procedures.',
-    recommendation:
-      prediction === 1
-        ? 'Verify skill tier availability before dispatch.'
-        : 'Initial assignment queue is appropriate for standard resolution.',
-    estimated_savings: prediction === 1 ? 'Saves ~2.1 Hours MTTR.' : 'Within standard SLA limits.',
+    decision_threshold: 0.5,
+    model_name: 'Random Forest',
+    status: 'success',
     inference_time_ms: 40,
   };
 };

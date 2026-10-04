@@ -43,7 +43,11 @@ describe('usePrediction Hook', () => {
       prediction: 1 as const,
       label: 'Reassignment Required' as const,
       probability: 0.84,
-      diagnosis: 'Test diagnosis',
+      risk_level: 'high' as const,
+      decision_threshold: 0.5,
+      model_name: 'Random Forest',
+      status: 'success' as const,
+      inference_time_ms: 40,
     };
 
     vi.mocked(mockApi.mockPredict).mockResolvedValueOnce(mockResponse);
@@ -92,6 +96,11 @@ describe('usePrediction Hook', () => {
         prediction: 0,
         label: 'No Reassignment Required',
         probability: 0.15,
+        risk_level: 'low',
+        decision_threshold: 0.5,
+        model_name: 'Random Forest',
+        status: 'success',
+        inference_time_ms: 40,
       });
 
     const { result } = renderHook(() => usePrediction());
@@ -117,6 +126,11 @@ describe('usePrediction Hook', () => {
       prediction: 0,
       label: 'No Reassignment Required',
       probability: 0.1,
+      risk_level: 'low',
+      decision_threshold: 0.5,
+      model_name: 'Random Forest',
+      status: 'success',
+      inference_time_ms: 40,
     });
 
     const { result } = renderHook(() => usePrediction());

@@ -2,11 +2,9 @@ import React from 'react';
 import {
   AlertTriangle,
   CheckCircle2,
-  Clock,
   Info,
   RotateCcw,
   ShieldCheck,
-  TrendingDown,
 } from 'lucide-react';
 import { Button } from '@/components/common/Button';
 import { PredictionResponse } from '@/types/prediction';
@@ -131,54 +129,28 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
             />
           </div>
 
-          {result.confidence && (
-            <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
-              <span>Model Confidence</span>
-              <span className="font-semibold text-slate-300">
-                {Math.round(result.confidence * 100)}%
-              </span>
-            </div>
-          )}
+          <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+            <span>Risk Level</span>
+            <span className="font-semibold text-slate-300 capitalize">{result.risk_level}</span>
+          </div>
+          <div className="flex items-center justify-between text-[11px] text-slate-400">
+            <span>Decision Threshold</span>
+            <span className="font-semibold text-slate-300">
+              {Math.round(result.decision_threshold * 100)}%
+            </span>
+          </div>
         </div>
       )}
 
-      {/* Pattern Diagnosis */}
-      {result.diagnosis && (
-        <div className="p-4 rounded-2xl bg-slate-800/80 border border-slate-700/80 space-y-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-            <Clock className="w-3.5 h-3.5 text-blue-400" />
-            Pattern Diagnosis
-          </span>
-          <p className="text-xs text-slate-200 leading-relaxed font-normal">
-            {result.diagnosis}
-          </p>
-        </div>
-      )}
-
-      {/* Advisory Recommendation */}
-      {result.recommendation && (
-        <div
-          className={`p-4 rounded-2xl border space-y-1.5 ${
-            isReassignmentRequired
-              ? 'bg-blue-950/60 border-blue-500/30'
-              : 'bg-emerald-950/60 border-emerald-500/30'
-          }`}
-        >
-          <div className="text-[10px] font-bold uppercase tracking-wider text-blue-300 flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
-            <span>Advisory Recommendation</span>
-          </div>
-          <div className="text-xs font-bold text-white">
-            {result.recommendation}
-          </div>
-          {result.estimated_savings && (
-            <div className="text-[11px] text-slate-300 flex items-center gap-1.5 pt-0.5">
-              <TrendingDown className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>{result.estimated_savings}</span>
-            </div>
-          )}
-        </div>
-      )}
+      <div className="p-4 rounded-2xl bg-slate-800/80 border border-slate-700/80 space-y-1.5">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
+          Model Details
+        </span>
+        <p className="text-xs text-slate-200 leading-relaxed font-normal">
+          {result.model_name} · API status: {result.status}
+        </p>
+      </div>
 
       {/* Avoid Overclaiming - Decision Support Guardrail */}
       <div className="p-3.5 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex items-start gap-2.5">
