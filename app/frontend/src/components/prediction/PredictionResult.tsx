@@ -2,11 +2,9 @@ import React from 'react';
 import {
   AlertTriangle,
   CheckCircle2,
-  Clock,
   Info,
   RotateCcw,
   ShieldCheck,
-  TrendingDown,
 } from 'lucide-react';
 import { Button } from '@/components/common/Button';
 import { PredictionResponse } from '@/types/prediction';
@@ -23,9 +21,6 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
   className = '',
 }) => {
   const isReassignmentRequired = result.prediction === 1;
-  const hasProbability = typeof result.probability === 'number' && !Number.isNaN(result.probability);
-
-  // Exact required wording per specifications
   const primaryOutcomeText = isReassignmentRequired
     ? 'Reassignment Required'
     : 'No Reassignment Required';
@@ -34,7 +29,7 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
     ? 'Review the initial routing before the incident proceeds further.'
     : 'The current routing is predicted to remain appropriate based on the submitted details.';
 
-  const probabilityPercent = hasProbability ? Math.round(result.probability * 100) : 0;
+  const probabilityPercent = result.probability * 100;
 
   return (
     <div
@@ -52,7 +47,7 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
         </div>
         <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          {result.inference_time_ms ? `${result.inference_time_ms}ms Inference` : '< 50ms Inference'}
+          {result.inference_time_ms}ms Inference
         </span>
       </div>
 
@@ -91,7 +86,7 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
             isReassignmentRequired ? 'text-rose-100' : 'text-emerald-100'
           }`}
         >
-          {primaryOutcomeText}
+          {result.label}
         </h3>
 
         {/* Mandated Supporting Guidance */}
@@ -100,9 +95,7 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
         </p>
       </div>
 
-      {/* Optional Probability Display - Only rendered when probability exists */}
-      {hasProbability && (
-        <div className="space-y-2 pt-1" data-testid="probability-section">
+      <div className="space-y-2 pt-1" data-testid="probability-section">
           <div className="flex items-baseline justify-between">
             <span className="text-xs text-slate-300 font-medium">
               Reassignment Probability
@@ -112,7 +105,7 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
                 isReassignmentRequired ? 'text-rose-400' : 'text-emerald-400'
               }`}
             >
-              {probabilityPercent}%
+              {probabilityPercent.toFixed(1)}%
             </span>
           </div>
 
@@ -131,54 +124,29 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
             />
           </div>
 
-          {result.confidence && (
-            <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
-              <span>Model Confidence</span>
-              <span className="font-semibold text-slate-300">
-                {Math.round(result.confidence * 100)}%
-              </span>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Pattern Diagnosis */}
-      {result.diagnosis && (
-        <div className="p-4 rounded-2xl bg-slate-800/80 border border-slate-700/80 space-y-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-            <Clock className="w-3.5 h-3.5 text-blue-400" />
-            Pattern Diagnosis
-          </span>
-          <p className="text-xs text-slate-200 leading-relaxed font-normal">
-            {result.diagnosis}
-          </p>
-        </div>
-      )}
-
-      {/* Advisory Recommendation */}
-      {result.recommendation && (
-        <div
-          className={`p-4 rounded-2xl border space-y-1.5 ${
-            isReassignmentRequired
-              ? 'bg-blue-950/60 border-blue-500/30'
-              : 'bg-emerald-950/60 border-emerald-500/30'
-          }`}
-        >
-          <div className="text-[10px] font-bold uppercase tracking-wider text-blue-300 flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
-            <span>Advisory Recommendation</span>
+          <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+            <span>Risk Level</span>
+            <span className="font-semibold text-slate-300 capitalize">
+              {result.risk_level} Risk
+            </span>
           </div>
-          <div className="text-xs font-bold text-white">
-            {result.recommendation}
+          <div className="flex items-center justify-between text-[11px] text-slate-400">
+            <span>Decision Threshold</span>
+            <span className="font-semibold text-slate-300">
+              {(result.decision_threshold * 100).toFixed(0)}%
+            </span>
           </div>
-          {result.estimated_savings && (
-            <div className="text-[11px] text-slate-300 flex items-center gap-1.5 pt-0.5">
-              <TrendingDown className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>{result.estimated_savings}</span>
-            </div>
-          )}
         </div>
-      )}
+
+      <div className="p-4 rounded-2xl bg-slate-800/80 border border-slate-700/80 space-y-1.5">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
+          Model Details
+        </span>
+        <p className="text-xs text-slate-200 leading-relaxed font-normal">
+          {result.model_name} · API status: {result.status}
+        </p>
+      </div>
 
       {/* Avoid Overclaiming - Decision Support Guardrail */}
       <div className="p-3.5 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex items-start gap-2.5">

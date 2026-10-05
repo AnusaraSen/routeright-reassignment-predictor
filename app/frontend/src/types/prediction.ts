@@ -22,12 +22,11 @@ export type PredictionRequest = PredictionFormData;
 
 export interface PredictionResponse {
   prediction: 0 | 1;
-  label: 'Reassignment Required' | 'No Reassignment Required';
+  label: string;
   probability: number;
-  confidence?: number;
-  risk_level?: 'low' | 'medium' | 'high';
-  diagnosis?: string;
-  recommendation?: string;
-  estimated_savings?: string;
-  inference_time_ms?: number;
+  risk_level: 'low' | 'medium' | 'high';
+  decision_threshold: number;
+  model_name: string;
+  status: 'success';
+  inference_time_ms: number;
 }

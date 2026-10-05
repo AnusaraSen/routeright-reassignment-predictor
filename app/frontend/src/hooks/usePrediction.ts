@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { mockPredict } from '@/mocks/prediction';
+import { predictIncident } from '@/api';
 import { PredictionFormData, PredictionResponse } from '@/types/prediction';
 import { normalizePredictionError } from '@/utils/errors';
 
@@ -29,7 +29,7 @@ export const usePrediction = (): UsePredictionReturn => {
     setLastPayload(formData);
 
     try {
-      const response = await mockPredict(formData);
+      const response = await predictIncident(formData);
       setResult(response);
       setStatus('success');
       return response;

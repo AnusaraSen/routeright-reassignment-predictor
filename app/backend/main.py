@@ -125,12 +125,14 @@ async def predict_incident(payload: IncidentPredictionRequest):
         result = predictor.predict(raw_dict)
 
         return IncidentPredictionResponse(
-            reassignment_required=result["prediction"],
-            reassignment_probability=result["probability"],
-            risk_label=result["risk_label"],
-            decision_threshold=result["threshold"],
-            model_name=predictor.meta.get("model", "Random Forest"),
-            status="success"
+            prediction=result["prediction"],
+            label=result["label"],
+            probability=result["probability"],
+            risk_level=result["risk_level"],
+            decision_threshold=result["decision_threshold"],
+            model_name=result["model_name"],
+            status=result["status"],
+            inference_time_ms=result["inference_time_ms"],
         )
     except ValueError as val_err:
         logger.warning(f"Validation error during prediction: {val_err}")
@@ -150,4 +152,3 @@ async def predict_incident(payload: IncidentPredictionRequest):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="An internal error occurred while processing the prediction."
         ) from err
-

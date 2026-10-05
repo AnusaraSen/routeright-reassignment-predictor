@@ -37,7 +37,7 @@ Professional decision-support frontend interface for IT service-desk incident re
    ```
    By default:
    - `VITE_API_BASE_URL=http://localhost:8000`
-   - `VITE_USE_MOCK_API=true` (Runs frontend standalone with typed mock adapter)
+   - `VITE_API_BASE_URL=http://localhost:8000` (FastAPI backend URL)
 
 4. Start development server:
    ```bash
