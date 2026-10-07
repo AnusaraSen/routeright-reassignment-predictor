@@ -45,12 +45,12 @@ describe('PredictionForm Component', () => {
     await user.click(loadSampleBtn);
 
     // Check that sample values have been set
-    expect(screen.getByText(/Opened by 17/i)).toBeInTheDocument();
+    expect(screen.getByText(/Tier 1 Support/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Contact Channel/i)).toHaveValue('Phone');
-    expect(screen.getByText(/Location 143/i)).toBeInTheDocument();
+    expect(screen.getByText(/North America HQ/i)).toBeInTheDocument();
     expect(screen.getByText(/Network \/ VPN Infrastructure/i)).toBeInTheDocument();
-    expect(screen.getByText(/Subcategory 170/i)).toBeInTheDocument();
-    expect(screen.getByText(/Symptom 491/i)).toBeInTheDocument();
+    expect(screen.getByText(/VPN Gateway Timeout/i)).toBeInTheDocument();
+    expect(screen.getByText(/Global Auth Timeout/i)).toBeInTheDocument();
     expect(screen.getByText(/General Service Desk L1 \(Group 70\)/i)).toBeInTheDocument();
   });
 
