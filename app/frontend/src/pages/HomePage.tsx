@@ -170,7 +170,7 @@ export const HomePage: React.FC = () => {
                     <span>Channel & Location</span>
                   </div>
                   <div className="font-bold text-white text-xs sm:text-sm">
-                    Phone &bull; Office 143
+                    Phone &bull; North America HQ
                   </div>
                 </div>
 
@@ -181,7 +181,7 @@ export const HomePage: React.FC = () => {
                     <span>Opened By</span>
                   </div>
                   <div className="font-bold text-white text-xs sm:text-sm">
-                    Opened by 17 (Staff)
+                    Tier 1 Support
                   </div>
                 </div>
 
@@ -191,7 +191,7 @@ export const HomePage: React.FC = () => {
                     <Network className="w-3.5 h-3.5 text-blue-400" />
                     <span>Subcategory</span>
                   </div>
-                  <div className="font-bold text-white text-xs sm:text-sm">Subcategory 170</div>
+                  <div className="font-bold text-white text-xs sm:text-sm">VPN Gateway Timeout</div>
                 </div>
               </div>
             </div>

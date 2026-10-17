@@ -198,8 +198,8 @@ export const PredictionForm: React.FC<PredictionFormProps> = ({
                   onChange={field.onChange}
                   onBlur={field.onBlur}
                   options={mockTicketOptions.opened_by}
-                  placeholder="Select Staff ID..."
-                  searchPlaceholder="Search staff ID or role..."
+                  placeholder="Select Staff..."
+                  searchPlaceholder="Search staff role or ID..."
                   error={errors.opened_by?.message}
                 />
               )}
