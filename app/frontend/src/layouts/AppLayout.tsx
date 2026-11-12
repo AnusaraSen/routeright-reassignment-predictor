@@ -13,6 +13,26 @@ export const AppLayout: React.FC = () => {
     { to: '/about', label: 'How It Works', icon: BookOpen },
   ];
 
+  const handleNavClick = () => {
+    if (typeof window !== 'undefined') {
+      try {
+        if (typeof window.scrollTo === 'function') {
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+        }
+      } catch {
+        // Fallback for environments where window.scrollTo throws
+      }
+    }
+    if (typeof document !== 'undefined') {
+      if (document.documentElement) {
+        document.documentElement.scrollTop = 0;
+      }
+      if (document.body) {
+        document.body.scrollTop = 0;
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900">
       {/* Top Glassmorphic Navigation Bar */}
@@ -23,6 +43,7 @@ export const AppLayout: React.FC = () => {
             <Link
               to="/"
               aria-label="RouteRight AI"
+              onClick={handleNavClick}
               className="flex flex-col group focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-xl p-1 transition-all"
             >
               <span className="sr-only">RouteRight AI</span>
@@ -53,6 +74,7 @@ export const AppLayout: React.FC = () => {
                     key={item.to}
                     to={item.to}
                     end={item.to === '/'}
+                    onClick={handleNavClick}
                     className={({ isActive }) =>
                       `flex items-center gap-2.5 px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                         isActive
@@ -72,7 +94,7 @@ export const AppLayout: React.FC = () => {
           {/* Right Column: Prediction Console CTA & Mobile Toggle */}
           <div className="col-span-4 md:col-span-3 flex items-center justify-end space-x-3">
             {location.pathname !== '/predict' && (
-              <Link to="/predict" className="hidden lg:inline-flex">
+              <Link to="/predict" onClick={handleNavClick} className="hidden lg:inline-flex">
                 <Button
                   variant="primary"
                   size="md"
@@ -107,7 +129,10 @@ export const AppLayout: React.FC = () => {
                   key={item.to}
                   to={item.to}
                   end={item.to === '/'}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleNavClick();
+                  }}
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                       isActive
