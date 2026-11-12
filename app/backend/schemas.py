@@ -2,7 +2,7 @@
 Pydantic Schemas for Prediction API Input and Output Data Contracts
 """
 
-from typing import Optional, Dict, Any, Literal
+from typing import Optional, Dict, Any, List, Literal
 from pydantic import BaseModel, Field, ConfigDict
 
 # Canonical ordinal value types matching the machine learning model
@@ -79,9 +79,24 @@ class IncidentPredictionRequest(BaseModel):
     )
 
 
+class DepartmentRecommendation(BaseModel):
+    """
+    Stage-2 candidate department recommendation with confidence score.
+    """
+    department: str = Field(
+        description="Recommended target support group / department (e.g. 'Group 70')"
+    )
+    probability: float = Field(
+        description="Predicted probability that this department resolves the reassigned ticket (0.0 to 1.0)"
+    )
+    rank: int = Field(
+        description="Recommendation rank (1 = highest probability)"
+    )
+
+
 class IncidentPredictionResponse(BaseModel):
     """
-    Output schema for incident ticket reassignment prediction.
+    Output schema for incident ticket reassignment prediction and Stage-2 department routing.
     """
     prediction: Literal[0, 1] = Field(
         description="Binary prediction: 1 = Reassignment Required, 0 = No Reassignment"
@@ -106,6 +121,14 @@ class IncidentPredictionResponse(BaseModel):
     )
     inference_time_ms: float = Field(
         description="Prediction inference duration in milliseconds"
+    )
+    predicted_department: Optional[str] = Field(
+        default=None,
+        description="Top recommended department after reassignment (Stage-2 routing prediction)"
+    )
+    recommended_departments: List[DepartmentRecommendation] = Field(
+        default_factory=list,
+        description="Top-3 recommended support departments after reassignment with probabilities"
     )
 
 

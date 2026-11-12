@@ -1,6 +1,6 @@
 /**
  * RouteRight AI - Prediction Type Contracts
- * Models prediction inputs and inference responses.
+ * Models prediction inputs and Two-Stage inference responses.
  */
 
 export interface PredictionFormData {
@@ -20,6 +20,12 @@ export interface PredictionFormData {
 
 export type PredictionRequest = PredictionFormData;
 
+export interface DepartmentRecommendation {
+  department: string;
+  probability: number;
+  rank: number;
+}
+
 export interface PredictionResponse {
   prediction: 0 | 1;
   label: string;
@@ -29,4 +35,6 @@ export interface PredictionResponse {
   model_name: string;
   status: 'success';
   inference_time_ms: number;
+  predicted_department?: string | null;
+  recommended_departments?: DepartmentRecommendation[];
 }

@@ -4,6 +4,7 @@ RouteRight AI - FastAPI Backend Foundation Service
 Endpoints implemented:
 - GET / : Root welcome endpoint
 - GET /health : Backend status and artifact availability check
+- POST /predict : Two-stage reassignment risk & target department prediction
 """
 
 from contextlib import asynccontextmanager
@@ -49,17 +50,23 @@ app = FastAPI(
     title="RouteRight AI - Incident Reassignment Predictor API",
     description=(
         "Backend service for predicting IT support ticket reassignment risks "
-        "using a trained Random Forest model and preprocessing pipeline."
+        "and recommending target support departments using a Two-Stage Random Forest pipeline."
     ),
-    version="0.1.0",
+    version="0.2.0",
     lifespan=lifespan
 )
 
-# Enable CORS for local development and future frontend integration
+# Enable CORS for local development and frontend integration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "*",
+    ],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -112,12 +119,13 @@ async def health_check():
     response_model=IncidentPredictionResponse,
     status_code=status.HTTP_200_OK,
     tags=["Prediction"],
-    summary="Predict Incident Ticket Reassignment Risk"
+    summary="Predict Incident Ticket Reassignment Risk & Target Department"
 )
 async def predict_incident(payload: IncidentPredictionRequest):
     """
     Predicts whether an IT support incident ticket is likely to require reassignment later
-    in its lifecycle, based on attributes available at ticket creation time.
+    in its lifecycle and recommends the Top-3 target support departments, based on attributes
+    available at ticket creation time.
     """
     try:
         predictor = get_predictor()
@@ -133,6 +141,8 @@ async def predict_incident(payload: IncidentPredictionRequest):
             model_name=result["model_name"],
             status=result["status"],
             inference_time_ms=result["inference_time_ms"],
+            predicted_department=result.get("predicted_department"),
+            recommended_departments=result.get("recommended_departments", []),
         )
     except ValueError as val_err:
         logger.warning(f"Validation error during prediction: {val_err}")

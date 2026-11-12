@@ -14,6 +14,12 @@ describe('PredictionResult Component', () => {
     model_name: 'Random Forest',
     status: 'success',
     inference_time_ms: 38,
+    predicted_department: 'Group 70',
+    recommended_departments: [
+      { department: 'Group 70', probability: 0.512, rank: 1 },
+      { department: 'Group 39', probability: 0.245, rank: 2 },
+      { department: 'Group 25', probability: 0.143, rank: 3 },
+    ],
   };
 
   const negativeResult: PredictionResponse = {
@@ -25,6 +31,11 @@ describe('PredictionResult Component', () => {
     model_name: 'Random Forest',
     status: 'success',
     inference_time_ms: 42,
+    predicted_department: 'Group 24',
+    recommended_departments: [
+      { department: 'Group 24', probability: 0.42, rank: 1 },
+      { department: 'Group 70', probability: 0.31, rank: 2 },
+    ],
   };
 
   it('renders positive outcome (prediction = 1) with exact required primary and supporting texts', () => {
@@ -43,6 +54,19 @@ describe('PredictionResult Component', () => {
     expect(screen.getByText('84.0%')).toBeInTheDocument();
     expect(screen.getByText('high Risk')).toBeInTheDocument();
     expect(screen.getByText('Random Forest · API status: success')).toBeInTheDocument();
+  });
+
+  it('renders Stage-2 recommended target departments and probabilities', () => {
+    render(<PredictionResult result={positiveResult} />);
+
+    expect(
+      screen.getByTestId('department-recommendations-section')
+    ).toBeInTheDocument();
+    expect(screen.getAllByText('Group 70').length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText('Group 39')).toBeInTheDocument();
+    expect(screen.getByText('Group 25')).toBeInTheDocument();
+    expect(screen.getByText('51.2%')).toBeInTheDocument();
+    expect(screen.getByText('24.5%')).toBeInTheDocument();
   });
 
   it('renders negative outcome (prediction = 0) with exact required primary and supporting texts', () => {

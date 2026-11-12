@@ -1,0 +1,249 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R] /Count 3 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 8046 >>
+stream
+BT /F2 17 Tf 0.06 0.09 0.16 rg 45.00 795.89 Td (RouteRight AI - Technical Interview Guide) Tj ET
+BT /F1 9.5 Tf 0.28 0.33 0.41 rg 45.00 778.89 Td (ML-Based IT Support Ticket Reassignment Risk Prediction System  |  Vidanapathirana A.U.S) Tj ET
+0.11 0.31 0.85 RG 1.8 w 45.00 768.89 m 550.28 768.89 l S
+0.937 0.965 1.0 rg 45.00 733.89 505.28 20.00 re f
+0.11 0.31 0.85 rg 45.00 733.89 3.5 20.00 re f
+BT /F2 11 Tf 0.11 0.31 0.85 rg 55.00 739.39 Td (1. Overview: What does the project do, and who is it for?) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 725.89 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 725.89 Td (What it does:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( RouteRight AI is an end-to-end machine learning decision-support system that) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 712.69 Td (predicts whether a newly created IT support incident ticket will later require reassignment to) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 699.49 Td (a different support group or analyst \(reassignment_required = 1 if final reassignment_count >) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 686.29 Td (0, else 0\).) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 670.59 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 670.59 Td (How it works:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( Using only the 11 attributes known at ticket creation time \(opened_at, opened_by,) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 657.39 Td (contact_type, location, category, subcategory, u_symptom, assignment_group, impact, urgency,) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 644.19 Td (and priority\), the system outputs a binary risk classification, a probability score, and a risk) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 630.99 Td (rating \(low / high\) in under 20-30 ms via a FastAPI service and React dashboard.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 615.29 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 615.29 Td (Who it is for:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( IT Service Desk triage analysts, dispatchers, and ITSM team leads \(using) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 602.09 Td (platforms like ServiceNow\). Rather than blindly auto-rerouting tickets, it acts as a human-in-) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 588.89 Td (the-loop decision support tool so dispatchers can review high-risk initial assignments before a) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 575.69 Td (ticket bounces between teams, reducing Mean Time to Resolution \(MTTR\) and SLA breaches.) Tj ET
+0.937 0.965 1.0 rg 45.00 540.99 505.28 20.00 re f
+0.11 0.31 0.85 rg 45.00 540.99 3.5 20.00 re f
+BT /F2 11 Tf 0.11 0.31 0.85 rg 55.00 546.49 Td (2. Your Contribution: What parts did you personally build or lead?) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 532.99 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 532.99 Td (Event-Log Reconstruction & Target Engineering \(01_Data_Understanding_Reconstruction.ipynb\):) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg () Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 519.79 Td (Transformed the raw UCI ServiceNow event log \(141,712 lifecycle event rows across 36) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 506.59 Td (attributes\) into a clean, incident-level dataset \(24,918 unique incidents\) by sorting) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 493.39 Td (chronologically per ticket \(number\) and extracting only the initial creation snapshot while) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 480.19 Td (deriving the ground-truth target from the final state.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 464.49 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 464.49 Td (Leakage Prevention, Custom Scikit-Learn Pipeline & Split \(04_Leakage_Validation_Split.ipynb\):) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg () Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 451.29 Td (Audited all features against post-creation leakage, implemented the chronological 85/15) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 438.09 Td (train/test split \(train.csv: 21,180 rows, test.csv: 3,738 rows\), and built custom scikit-learn) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 424.89 Td (transformers \(CategoryLabelCleaner and RareCategoryGrouper\) fitted strictly on training data to) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 411.69 Td (produce the 109-feature matrix.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 395.99 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 395.99 Td (Standardized Modelling & Evaluation Harness \(baseline_common.py, tuning_common.py,) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 382.79 Td (07_Model_Evaluation.ipynb\):) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( Designed the shared cross-validation and tuning utilities using) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 369.59 Td (5-fold TimeSeriesSplit so all four algorithms \(Logistic Regression, Decision Tree, Random) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 356.39 Td (Forest, Gradient Boosting\) were benchmarked on identical folds without touching the sealed test) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 343.19 Td (set.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 327.49 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 327.49 Td (Productionization & API Integration \(app/backend/main.py, predictor.py\):) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( Led the integration of) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 314.29 Td (the serialized pipeline and final Random Forest model into a FastAPI backend coupled with a) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 301.09 Td (React + TypeScript + Tailwind frontend and a comprehensive pytest resilience test suite.) Tj ET
+0.937 0.965 1.0 rg 45.00 266.39 505.28 20.00 re f
+0.11 0.31 0.85 rg 45.00 266.39 3.5 20.00 re f
+BT /F2 11 Tf 0.11 0.31 0.85 rg 55.00 271.89 Td (3. Choices: Why did you choose that technology or approach?) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 258.39 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 258.39 Td (Random Forest as the Final Model \(final_model_meta.json\):) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( Compared Logistic Regression,) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 245.19 Td (Decision Tree, Random Forest, and Gradient Boosting across unweighted, class-weighted, and) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 231.99 Td (tuned variants. Tuned Random Forest \(n_estimators=500, min_samples_leaf=2, max_features='sqrt',) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 218.79 Td (class_weight='balanced'\) achieved the highest CV PR-AUC \(0.7611\) and ROC-AUC \(0.7881\), beating) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 205.59 Td (Gradient Boosting \(0.7537\) and Logistic Regression \(0.7183\) by capturing non-linear) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 192.39 Td (interactions between assignment_group, category/subcategory, and opening time.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 176.69 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 176.69 Td (Chronological Split + TimeSeriesSplit\(5\) over Random Stratified K-Fold:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( IT ticket routing) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 163.49 Td (patterns, staffing, and ticket volumes shift over time. A random split lets the model train on) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 150.29 Td (future tickets to predict past tickets \(temporal leakage\). Splitting chronologically by) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 137.09 Td (opened_at and validating with TimeSeriesSplit simulates real production deployment.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 121.39 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 121.39 Td (PR-AUC as Primary Metric over Accuracy:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( Because of temporal target drift between the training) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 108.19 Td (period \(~47.1% positive\) and test period \(~37.1% positive\), raw accuracy is misleading across) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 94.99 Td (splits. PR-AUC directly measures positive-class ranking quality regardless of base-rate shifts.) Tj ET
+BT /F1 8 Tf 0.45 0.50 0.58 rg 262.64 24.00 Td (Page 1 of 3) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 8837 >>
+stream
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 795.89 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 795.89 Td (FastAPI + React/TypeScript over a Monolithic Notebook UI:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( Decoupling the FastAPI REST service) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 782.69 Td (\(with strict Pydantic schemas\) from a React + TypeScript + Zod frontend allows the inference) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 769.49 Td (engine to be consumed both by the web UI and by enterprise ITSM webhooks.) Tj ET
+0.937 0.965 1.0 rg 45.00 734.79 505.28 20.00 re f
+0.11 0.31 0.85 rg 45.00 734.79 3.5 20.00 re f
+BT /F2 11 Tf 0.11 0.31 0.85 rg 55.00 740.29 Td (4. Challenges: What was the hardest problem, and how did you solve it?) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 726.79 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 726.79 Td (Challenge 1 - Multi-Layer Data Leakage in an Event-Log Dataset:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( The raw dataset had 141,712) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 713.59 Td (rows where each state change of a ticket added a new row. Using the final snapshot leaks future) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 700.39 Td (fields \(reassignment_count, sys_mod_count, resolved_at, closed_code, or a later) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 687.19 Td (assignment_group\). Solution: Extracted feature values strictly from the first event row at) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 673.99 Td (creation time, used the final row only for the label, and deferred all frequency-based) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 660.79 Td (preprocessing \(imputation, rare-category grouping at <1%, and one-hot encoding\) until after the) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 647.59 Td (chronological split.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 631.89 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 631.89 Td (Challenge 2 - Temporal Target Drift & Calendar Confounding \(opened_month\):) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( Because of the) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 618.69 Td (chronological split, 92.7% of the test set fell in May, and the positive reassignment rate) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 605.49 Td (dropped by 10 percentage points from train \(47.12%\) to test \(37.13%\). Solution: Documented the) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 592.29 Td (drift in 04_Leakage_Validation_Split.ipynb and ran a pre-declared sensitivity check in 06e and) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 579.09 Td (07_Model_Evaluation.ipynb by evaluating a parallel model without opened_month to verify the) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 565.89 Td (model was not relying on a calendar shortcut.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 550.19 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 550.19 Td (Challenge 3 - Unpickling Custom Notebook Transformers in Production:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( Scikit-learn pipelines) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 536.99 Td (pickled inside a notebook bind custom classes \(CategoryLabelCleaner, RareCategoryGrouper\) to) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 523.79 Td (__main__, causing AttributeError inside FastAPI/Uvicorn workers. Solution: Extracted the) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 510.59 Td (classes into app/backend/transformers.py with register_custom_transformers\(\) and added startup) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 497.39 Td (checks verifying all 109 feature names match final_model_meta.json.) Tj ET
+0.937 0.965 1.0 rg 45.00 462.69 505.28 20.00 re f
+0.11 0.31 0.85 rg 45.00 462.69 3.5 20.00 re f
+BT /F2 11 Tf 0.11 0.31 0.85 rg 55.00 468.19 Td (5. Teamwork: How did you divide work or handle disagreements?) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 454.69 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 454.69 Td (Clear Pipeline Contracts & Handoff Artifacts:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( In Phase 1, work was divided into 4 sequential) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 441.49 Td (stages with strict CSV/pkl handoff contracts: \(1\) Event-log reconstruction, \(2\) EDA & quality) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 428.29 Td (audit, \(3\) Deterministic cleaning & feature engineering, and \(4\) Leakage validation, pipeline) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 415.09 Td (fitting, and train/test splitting. In Phase 2, each member owned one of the 4 model families) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 401.89 Td (\(05a-05d, 06a-06d\) sharing baseline_common.py and tuning_common.py.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 386.19 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 386.19 Td (Handling Disagreements \(Split Strategy & Test-Set Guard\):) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( When debating random vs.) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 372.99 Td (chronological splitting \(since random splits gave smoother validation accuracy\), we aligned on) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 359.79 Td (a chronological split by demonstrating why random splitting on time-ordered logs leaks future) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 346.59 Td (patterns. We also kept test.csv sealed during tuning and added an automated lock-file guard) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 333.39 Td (\(TEST_SET_USED.json\) in 07_Model_Evaluation.ipynb.) Tj ET
+0.937 0.965 1.0 rg 45.00 298.69 505.28 20.00 re f
+0.11 0.31 0.85 rg 45.00 298.69 3.5 20.00 re f
+BT /F2 11 Tf 0.11 0.31 0.85 rg 55.00 304.19 Td (6. Results: What worked well? How did you measure success?) Tj ET
+0.973 0.980 0.988 rg 0.80 0.84 0.88 RG 0.8 w 45.00 260.69 120.32 36.00 re B
+BT /F2 11.5 Tf 0.11 0.31 0.85 rg 53.00 280.19 Td (0.7559) Tj ET
+BT /F1 7.8 Tf 0.28 0.33 0.41 rg 53.00 268.19 Td (Test PR-AUC \(vs 0.3713 base\)) Tj ET
+0.973 0.980 0.988 rg 0.80 0.84 0.88 RG 0.8 w 173.32 260.69 120.32 36.00 re B
+BT /F2 11.5 Tf 0.11 0.31 0.85 rg 181.32 280.19 Td (0.8226) Tj ET
+BT /F1 7.8 Tf 0.28 0.33 0.41 rg 181.32 268.19 Td (Test ROC-AUC \(CI: 0.81-0.84\)) Tj ET
+0.973 0.980 0.988 rg 0.80 0.84 0.88 RG 0.8 w 301.64 260.69 120.32 36.00 re B
+BT /F2 11.5 Tf 0.11 0.31 0.85 rg 309.64 280.19 Td (0.6793) Tj ET
+BT /F1 7.8 Tf 0.28 0.33 0.41 rg 309.64 268.19 Td (Test F1-Score \(CV: 0.6802\)) Tj ET
+0.973 0.980 0.988 rg 0.80 0.84 0.88 RG 0.8 w 429.96 260.69 120.32 36.00 re B
+BT /F2 11.5 Tf 0.11 0.31 0.85 rg 437.96 280.19 Td (71.11%) Tj ET
+BT /F1 7.8 Tf 0.28 0.33 0.41 rg 437.96 268.19 Td (Test Recall \(@ 65% Precision\)) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 248.69 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 248.69 Td (Strong Generalization on the Sealed Test Set:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( Test PR-AUC \(0.7559\) more than doubled the no-) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 235.49 Td (skill reference \(0.3713\) and stayed within 0.0052 of the CV estimate \(0.7611\). Test accuracy) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 222.29 Td (reached 75.07% vs. the 62.87% majority-class baseline, with virtually zero overfitting gap on) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 209.09 Td (F1 \(0.6793 test vs. 0.6802 CV\).) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 193.39 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 193.39 Td (Engineering & System Reliability:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( Single-ticket inference runs in under 30 ms in FastAPI,) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 180.19 Td (backed by automated unit, API resilience, and model robustness test suites in tests/.) Tj ET
+0.937 0.965 1.0 rg 45.00 145.49 505.28 20.00 re f
+0.11 0.31 0.85 rg 45.00 145.49 3.5 20.00 re f
+BT /F2 11 Tf 0.11 0.31 0.85 rg 55.00 150.99 Td (7. Improvements: What would you change if you did it again?) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 137.49 Td (1.) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 137.49 Td (Recommend the Target Support Group \(Multi-Class Routing\):) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( Extend the binary risk flagger with a) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 124.29 Td (second-stage multi-class model that recommends the top-3 most likely final assignment_groups so) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 111.09 Td (dispatchers know where to route the ticket.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 95.39 Td (2.) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 95.39 Td (Incorporate Unstructured Text \(NLP Embeddings\):) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( In a live ServiceNow deployment where free-text) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 82.19 Td (descriptions are available, combining tabular metadata with text embeddings \(e.g., DistilBERT) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 68.99 Td (or TF-IDF + SVD on short_description\) would significantly improve precision.) Tj ET
+BT /F1 8 Tf 0.45 0.50 0.58 rg 262.64 24.00 Td (Page 2 of 3) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 10 0 R >>
+endobj
+10 0 obj
+<< /Length 5841 >>
+stream
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 795.89 Td (3.) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 795.89 Td (Probability Calibration & Dynamic Thresholding under Drift:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( Apply Platt or Isotonic calibration) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 782.69 Td (and dynamically adjust the decision threshold based on rolling ticket volume to keep) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 769.49 Td (precision/recall stable across seasonal shifts.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 753.79 Td (4.) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 753.79 Td (Historical Group-Level Target Encoding:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( Compute out-of-fold rolling historical reassignment) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 740.59 Td (rates per \(assignment_group, category\) pair over a trailing time window.) Tj ET
+0.937 0.965 1.0 rg 45.00 705.89 505.28 20.00 re f
+0.11 0.31 0.85 rg 45.00 705.89 3.5 20.00 re f
+BT /F2 11 Tf 0.11 0.31 0.85 rg 55.00 711.39 Td (8. Details: How does a key feature work? What happens in unusual cases?) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 697.89 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 697.89 Td (End-to-End Inference Flow \(ReassignmentPredictor.predict\):) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( \(1\) FastAPI validates the 11 raw) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 684.69 Td (ticket fields via IncidentPredictionRequest. \(2\) engineer_features\(\) parses opened_at into 4) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 671.49 Td (temporal features \(opened_hour, opened_day_of_week, opened_month, opened_is_weekend\) and maps) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 658.29 Td (impact, urgency, and priority to ordinal severity integers \(1..3 and 1..4\), assembling the 14) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 645.09 Td (pipeline columns. \(3\) preprocessing_pipeline.pkl runs CategoryLabelCleaner ->) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 631.89 Td (SimpleImputer\('Missing'\) -> RareCategoryGrouper\(<1% -> 'Other'\) -> OneHotEncoder, producing the) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 618.69 Td (exact 109-feature vector for model.predict_proba\(\).) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 59.00 602.99 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 69.00 602.99 Td (Edge Case - Unseen / Brand-New Categories \(e.g., 'Opened by 99999'\):) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( RareCategoryGrouper) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 69.00 589.79 Td (checks membership against learned training categories and routes any unseen value) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 69.00 576.59 Td (cleanly into the 'Other' bucket \(opened_by_Other = 1\) rather than crashing or producing) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 69.00 563.39 Td (all-zero OHE rows.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 59.00 547.69 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 69.00 547.69 Td (Edge Case - Missing Optional Fields \(None, '', or whitespace '   '\):) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( _clean_nominal\(\)) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 69.00 534.49 Td (normalizes empty/whitespace strings to np.nan, which SimpleImputer routes to 'Missing'.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 59.00 518.79 Td (-) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 69.00 518.79 Td (Edge Case - Mixed Datetime Formats & Degraded Artifacts:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( _parse_opened_at\(\) supports) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 69.00 505.59 Td (both ISO-8601 \('2016-03-01 09:30:00'\) and European day-first \('29/2/2016 01:16',) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 69.00 492.39 Td (including leap years\) strings, returning HTTP 400 on invalid dates. If model files are) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 69.00 479.19 Td (missing or feature counts mismatch on startup, /health reports status='degraded'.) Tj ET
+0.937 0.965 1.0 rg 45.00 444.49 505.28 20.00 re f
+0.11 0.31 0.85 rg 45.00 444.49 3.5 20.00 re f
+BT /F2 11 Tf 0.11 0.31 0.85 rg 55.00 449.99 Td (9. Your Learning: What did the project teach you?) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 436.49 Td (1.) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 436.49 Td (Data Leakage is Subtle in Temporal & Event-Driven Systems:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( In real-world logs, leakage hides in) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 423.29 Td (row aggregation \(using the last state of a mutable field\), in preprocessing \(computing category) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 410.09 Td (frequencies before splitting\), and in random cross-validation across time.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 394.39 Td (2.) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 394.39 Td (Bridging the Gap Between Notebook ML and Production Software:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( A model that scores well in a) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 381.19 Td (notebook is not ready for production until its preprocessing state, custom transformers,) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 367.99 Td (feature ordering \(109 columns\), and input schemas are locked down with automated contract) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 354.79 Td (tests.) Tj ET
+BT /F2 9.5 Tf 0.11 0.31 0.85 rg 45.00 339.09 Td (3.) Tj ET
+BT /F2 9.4 Tf 0.06 0.09 0.16 rg 55.00 339.09 Td (Evaluating Models Under Real-World Distribution Shift:) Tj /F1 9.4 Tf 0.15 0.20 0.28 rg ( Navigating a 10% target-rate shift) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 325.89 Td (between training and test periods highlighted why ranking metrics \(PR-AUC, ROC-AUC\), bootstrap) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 312.69 Td (confidence intervals, and out-of-fold threshold selection are essential on non-stationary) Tj ET
+BT /F1 9.4 Tf 0.15 0.20 0.28 rg 55.00 299.49 Td (operational data.) Tj ET
+BT /F1 8 Tf 0.45 0.50 0.58 rg 262.64 24.00 Td (Page 3 of 3) Tj ET
+endstream
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000133 00000 n 
+0000000230 00000 n 
+0000000332 00000 n 
+0000000474 00000 n 
+0000008572 00000 n 
+0000008714 00000 n 
+0000017603 00000 n 
+0000017746 00000 n 
+trailer
+<< /Size 11 /Root 1 0 R >>
+startxref
+23640
+%%EOF

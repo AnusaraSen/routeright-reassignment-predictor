@@ -1,9 +1,21 @@
 import type { PredictionFormData, PredictionResponse } from '../types/prediction';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001';
+const FALLBACK_API_BASE_URL = 'http://localhost:8000';
+
+async function fetchWithFallback(path: string, init?: RequestInit): Promise<Response> {
+  try {
+    return await fetch(`${API_BASE_URL}${path}`, init);
+  } catch (err) {
+    if (!import.meta.env.VITE_API_BASE_URL) {
+      return await fetch(`${FALLBACK_API_BASE_URL}${path}`, init);
+    }
+    throw err;
+  }
+}
 
 export async function predictIncident(payload: PredictionFormData): Promise<PredictionResponse> {
-  const response = await fetch(`${API_BASE_URL}/predict`, {
+  const response = await fetchWithFallback('/predict', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -37,7 +49,7 @@ export async function predictIncident(payload: PredictionFormData): Promise<Pred
 
 export async function healthCheck(): Promise<boolean> {
   try {
-    const response = await fetch(`${API_BASE_URL}/health`);
+    const response = await fetchWithFallback('/health');
 
     return response.ok;
   } catch {

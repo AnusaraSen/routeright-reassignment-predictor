@@ -1,11 +1,14 @@
-"""Standalone prediction service for RouteRight AI ticket reassignment risk.
+"""Standalone prediction service for RouteRight AI ticket reassignment risk & department routing.
 
-This module implements the complete inference flow from 11 raw ticket input
-fields to the final binary risk prediction, strictly matching the transformations
-and artifact configurations established during model training.
+This module implements the complete Two-Stage inference flow from 11 raw ticket input
+fields to:
+1. Stage 1: Binary reassignment risk prediction & probability score
+2. Stage 2: Top-3 recommended target support departments after reassignment
+strictly matching the transformations and artifact configurations established during training.
 """
 
 import json
+import re
 import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
@@ -84,8 +87,21 @@ def _find_project_root() -> Path:
     return Path.cwd()
 
 
+def _normalize_group_label(val: Any) -> Optional[str]:
+    """Normalize an assignment_group string (e.g. '70' or 'Group 70' -> 'Group 70')."""
+    if val is None or pd.isna(val):
+        return None
+    s = str(val).strip()
+    if not s:
+        return None
+    m = re.match(r"^(?:Group\s*)?(\d+)$", s, flags=re.IGNORECASE)
+    if m:
+        return f"Group {m.group(1)}"
+    return s
+
+
 class ReassignmentPredictor:
-    """Core prediction service managing feature engineering, preprocessing, and model inference."""
+    """Core prediction service managing feature engineering, preprocessing, and Two-Stage model inference."""
 
     def __init__(
         self,
@@ -95,30 +111,49 @@ class ReassignmentPredictor:
         pipeline_path: Optional[Union[str, Path]] = None,
         model_path: Optional[Union[str, Path]] = None,
         meta_path: Optional[Union[str, Path]] = None,
+        department_model: Optional[Any] = None,
+        department_model_path: Optional[Union[str, Path]] = None,
         auto_load: bool = True,
     ):
         project_root = _find_project_root()
         self.pipeline_path = Path(pipeline_path or (project_root / "models" / "preprocessing_pipeline.pkl"))
         self.model_path = Path(model_path or (project_root / "models" / "final" / "final_model.pkl"))
         self.meta_path = Path(meta_path or (project_root / "models" / "final" / "final_model_meta.json"))
+        self.department_model_path = Path(
+            department_model_path or (project_root / "models" / "final" / "department_routing_model.pkl")
+        )
 
         self.pipeline: Any = pipeline
         self.model: Any = model
         self.meta: Dict[str, Any] = meta or {}
+        self.department_model: Any = department_model
         self.threshold: float = 0.5
         self.class_1_idx: int = 1
         self.is_loaded: bool = False
 
         if model is not None and pipeline is not None and meta is not None:
-            self._validate_and_set_artifacts(model, pipeline, meta)
+            self._validate_and_set_artifacts(model, pipeline, meta, department_model)
         elif auto_load:
             self.load_artifacts()
 
-    def _validate_and_set_artifacts(self, model: Any, pipeline: Any, meta: Dict[str, Any]) -> None:
+    def _validate_and_set_artifacts(
+        self,
+        model: Any,
+        pipeline: Any,
+        meta: Dict[str, Any],
+        department_model: Optional[Any] = None,
+    ) -> None:
         """Validate pre-loaded artifacts and assign internal references."""
         self.model = model
         self.pipeline = pipeline
         self.meta = meta
+        if department_model is not None:
+            self.department_model = department_model
+        elif self.department_model is None and self.department_model_path.exists():
+            try:
+                self.department_model = joblib.load(self.department_model_path)
+            except Exception:
+                self.department_model = None
 
         self.threshold = float(self.meta.get("decision_threshold", 0.5))
         expected_meta_columns = self.meta.get("feature_columns", [])
@@ -168,7 +203,7 @@ class ReassignmentPredictor:
             self._validate_and_set_artifacts(
                 artifact_loader.model,
                 artifact_loader.pipeline,
-                artifact_loader.metadata
+                artifact_loader.metadata,
             )
             return
 
@@ -314,8 +349,50 @@ class ReassignmentPredictor:
             df_14[col] = df_14[col].astype(object)
         return df_14
 
+    def _predict_departments(
+        self, X_df: pd.DataFrame, initial_group: Optional[str] = None, top_k: int = 3
+    ) -> List[Dict[str, Any]]:
+        """Run Stage-2 multi-class model to recommend Top-K resolving departments after reassignment."""
+        if self.department_model is None or not hasattr(self.department_model, "predict_proba"):
+            return []
+
+        try:
+            dept_probs = self.department_model.predict_proba(X_df)[0]
+            dept_classes = list(self.department_model.classes_)
+        except Exception:
+            return []
+
+        norm_initial = _normalize_group_label(initial_group)
+
+        # Pair concrete departments with their probabilities (exclude catch-all 'Other Department'
+        # and exclude the initial_group when suggesting reassignment targets)
+        candidates = []
+        for dept_label, prob in zip(dept_classes, dept_probs):
+            if dept_label == "Other Department":
+                continue
+            if norm_initial and dept_label == norm_initial:
+                continue
+            candidates.append((str(dept_label), float(prob)))
+
+        # Normalize probabilities over valid reassignment target departments so relative confidence sums to 1
+        total_candidate_prob = sum(p for _, p in candidates)
+        if total_candidate_prob > 0:
+            candidates = [(d, p / total_candidate_prob) for d, p in candidates]
+
+        candidates.sort(key=lambda item: item[1], reverse=True)
+        top_candidates = candidates[:top_k]
+
+        return [
+            {
+                "department": dept,
+                "probability": round(prob, 4),
+                "rank": idx + 1,
+            }
+            for idx, (dept, prob) in enumerate(top_candidates)
+        ]
+
     def predict(self, raw_input: Union[Dict[str, Any], pd.DataFrame]) -> Dict[str, Any]:
-        """Perform end-to-end prediction from raw ticket inputs.
+        """Perform end-to-end Two-Stage prediction from raw ticket inputs.
 
         Returns:
             Dict containing:
@@ -327,6 +404,8 @@ class ReassignmentPredictor:
                 - model_name (str): Name of the trained model
                 - status (str): Prediction status
                 - inference_time_ms (float): Inference duration in milliseconds
+                - predicted_department (Optional[str]): Top-1 recommended department after reassignment
+                - recommended_departments (List[Dict]): Top-3 recommended departments with probabilities
         """
         start_time = time.perf_counter()
 
@@ -352,7 +431,7 @@ class ReassignmentPredictor:
                 f"Transformed feature shape {X_array.shape} does not match expected {EXPECTED_FEATURE_COUNT} columns."
             )
 
-        # Step 5: Model inference
+        # Step 5: Stage-1 Model inference (Reassignment Risk)
         try:
             feature_names = self.pipeline.get_feature_names_out()
             X_df = pd.DataFrame(X_array, columns=feature_names)
@@ -367,6 +446,14 @@ class ReassignmentPredictor:
         prediction = 1 if pos_prob >= self.threshold else 0
         label = "Reassignment Required" if prediction == 1 else "No Reassignment Required"
         risk_level = "high" if prediction == 1 else "low"
+
+        # Step 8: Stage-2 Model inference (Recommended Target Department after Reassignment)
+        raw_group = df_14.iloc[0]["assignment_group"]
+        recommended_departments = self._predict_departments(X_df, initial_group=raw_group, top_k=3)
+        predicted_department = (
+            recommended_departments[0]["department"] if recommended_departments else None
+        )
+
         inference_time_ms = (time.perf_counter() - start_time) * 1000
 
         return {
@@ -378,6 +465,8 @@ class ReassignmentPredictor:
             "model_name": self.meta.get("model", "Random Forest"),
             "status": "success",
             "inference_time_ms": round(inference_time_ms, 2),
+            "predicted_department": predicted_department,
+            "recommended_departments": recommended_departments,
         }
 
 

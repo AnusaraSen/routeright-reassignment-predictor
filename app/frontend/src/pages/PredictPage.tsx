@@ -29,15 +29,15 @@ export const PredictPage: React.FC = () => {
       <div className="border-b border-slate-200 pb-6 space-y-3">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-bold uppercase tracking-wider shadow-xs">
           <Activity className="w-3.5 h-3.5 text-blue-600 animate-pulse" />
-          Triage Intelligence Engine
+          Two-Stage Triage &amp; Routing Intelligence Engine
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
           Incident Reassignment Risk Prediction
         </h1>
         <p className="text-sm sm:text-base text-slate-600 max-w-3xl leading-relaxed font-normal">
-          Enter initial ticket attributes known at ticket creation to evaluate the probability of
-          future reassignment. All evaluations operate strictly on initial ticket creation
-          attributes to support first-contact routing accuracy.
+          Enter initial ticket attributes known at creation time to evaluate (1) the probability of
+          future reassignment and (2) the Top-3 recommended target support departments if
+          reassignment is required.
         </p>
       </div>
 
@@ -55,8 +55,9 @@ export const PredictPage: React.FC = () => {
               </span>
             </div>
             <p className="text-xs sm:text-sm text-slate-600 mt-0.5 leading-relaxed">
-              This prediction tool assists service-desk triage officers in recognizing risk
-              patterns. It does not automatically reassign tickets or bypass team routing policies.
+              This prediction tool assists service-desk triage officers in recognizing reassignment
+              risk patterns and identifying likely target departments. It does not automatically
+              reassign tickets.
             </p>
           </div>
         </div>
@@ -136,7 +137,7 @@ export const PredictPage: React.FC = () => {
                   <h3 className="text-base font-bold text-white">Awaiting Submission</h3>
                   <p className="text-xs text-slate-400 max-w-xs leading-relaxed">
                     Complete the ticket parameters form and submit to receive an immediate risk
-                    assessment.
+                    assessment and Top-3 target department recommendations.
                   </p>
                 </div>
 
@@ -150,9 +151,9 @@ export const PredictPage: React.FC = () => {
                   </div>
                   <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 text-left space-y-0.5">
                     <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
-                      Routing Verdict
+                      Target Department
                     </span>
-                    <div className="text-xs font-bold text-slate-500 pt-1">Pending Input</div>
+                    <div className="text-xs font-bold text-slate-500 pt-1">Top-3 Groups</div>
                   </div>
                 </div>
               </div>
@@ -174,7 +175,7 @@ export const PredictPage: React.FC = () => {
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                 Zero Leakage Guaranteed
               </span>
-              <span className="text-slate-400">Operational Model Specs</span>
+              <span className="text-slate-400">Two-Stage RF Pipeline</span>
             </div>
           </div>
         </section>

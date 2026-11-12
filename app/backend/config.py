@@ -17,3 +17,5 @@ PROJECT_ROOT = APP_DIR.parent
 MODEL_PATH = PROJECT_ROOT / "models" / "final" / "final_model.pkl"
 METADATA_PATH = PROJECT_ROOT / "models" / "final" / "final_model_meta.json"
 PREPROCESSING_PIPELINE_PATH = PROJECT_ROOT / "models" / "preprocessing_pipeline.pkl"
+DEPARTMENT_MODEL_PATH = PROJECT_ROOT / "models" / "final" / "department_routing_model.pkl"
+DEPARTMENT_METADATA_PATH = PROJECT_ROOT / "models" / "final" / "department_routing_meta.json"
